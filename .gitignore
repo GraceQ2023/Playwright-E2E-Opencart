@@ -1,0 +1,26 @@
+# Node modules
+node_modules/
+
+# Playwright output
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+playwright/.auth/
+
+# Environment files
+.env
+.env.local
+
+# Logs
+logs/
+*.log
+
+# IDE / OS files
+.DS_Store
+.vscode/
+.idea/
+
+# TypeScript build outputs (if you compile manually)
+dist/
+out/
