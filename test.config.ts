@@ -10,6 +10,11 @@ export class TestConfig{
         password: 'test1234'
     };
 
+     static readonly invalidUser = {
+        email: 'invalid.user@gmail.com',
+        password: 'test@1'
+    };
+
 // Product info
 
 static readonly product = {

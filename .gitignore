@@ -8,6 +8,12 @@ blob-report/
 playwright/.cache/
 playwright/.auth/
 
+# Allure reports
+allure-results/
+allure-report/
+allure-history/
+
+
 # Environment files
 .env
 .env.local
@@ -24,3 +30,5 @@ logs/
 # TypeScript build outputs (if you compile manually)
 dist/
 out/
+
+
