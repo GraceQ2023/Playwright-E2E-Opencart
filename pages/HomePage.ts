@@ -2,6 +2,7 @@ import {Page, Locator} from '@playwright/test';
 import { RegisterPage } from './RegisterPage';
 import { LoginPage } from './LoginPage';
 import { CartPage } from './CartPage';
+import { CheckoutPage } from './CheckoutPage';
 
 export class HomePage {
     private readonly page: Page; // private keyword to restrict access to this variable, enforces encapsulation
@@ -15,6 +16,7 @@ export class HomePage {
     private readonly firstFeatureProduct: Locator; 
     private readonly confirmationAlert: Locator;
     private readonly shoppingCartLink: Locator; 
+    private readonly checkoutLink: Locator
 
     constructor(page: Page) {
         this.page = page;
@@ -27,6 +29,7 @@ export class HomePage {
         this.searchButton = page.locator('#search button[type="button"]');
         this.confirmationAlert = page.locator(".alert.alert-success.alert-dismissible");
         this.shoppingCartLink = page.getByTitle('Shopping Cart');
+        this.checkoutLink = page.locator('span:has-text("Checkout")');
         this.firstFeatureProduct = page.locator('div.product-thumb.transition').first();
     }
 
@@ -35,7 +38,7 @@ export class HomePage {
      * Check if the homepage is loaded.
      * @returns 
      */
-    async isHomePageLoaded(): Promise<boolean> {
+    async isPageLoaded(): Promise<boolean> {
         let title:string = await this.page.title();
         if(title.includes('Your Store')){
             return true;
@@ -105,11 +108,38 @@ export class HomePage {
 
     /**
      * Navigate to Shopping Cart page
-     * @returns Promise<CartPage> - Returns CartPage instance
+     * @returns Promise<CartPage> - Returns CartPage instance   
      */
     async navigateToShoppingCart(): Promise<CartPage> {
+
         await this.shoppingCartLink.click();
         return new CartPage(this.page);
     }
+
+    // NOTE: only the checkout link inside the cart dropdown works for the complete checkout process
+    async openCartDropdown(): Promise<void> {
+
+        await this.page.locator('#cart button[data-toggle="dropdown"]').click();
+        await this.page.locator('#cart .dropdown-menu').waitFor({ state: 'visible' });
+    }
+
+
+    /**
+     * Navigate to checkout page
+     * @returns Promise<CheckoutPage> - Returns CheckoutPage instance
+     */
+    async navigateToCheckout(): Promise<CheckoutPage> {
+  
+        await this.checkoutLink.click();
+        return new CheckoutPage(this.page);
+    }
+
+    // async navigateToCheckout(): Promise<CheckoutPage> {
+
+    //     await this.openCartDropdown();
+    //     await this.checkoutLink.waitFor({ state: 'visible', timeout: 5000 });
+    //     await this.checkoutLink.click();
+    //     return new CheckoutPage(this.page);
+    // }
 
 }

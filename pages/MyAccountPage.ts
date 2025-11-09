@@ -1,6 +1,7 @@
 import { Page, Locator, expect } from '@playwright/test';
 import { LogoutPage } from './LogoutPage'; // Import LogoutPage if needed
 import { MyAccInfoPage } from './MyAccInfoPage';
+import { HomePage } from './HomePage';
 
 export class MyAccountPage {
     private readonly page: Page;
@@ -9,6 +10,7 @@ export class MyAccountPage {
     private readonly logoutLink: Locator;
     private readonly editAccountLink: Locator;
     private readonly confirmationMsg: Locator;
+    private readonly logoLink: Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -17,6 +19,7 @@ export class MyAccountPage {
         this.logoutLink = page.locator('#column-right a:has-text("Logout")');
         this.editAccountLink = page.locator('#column-right a:has-text("Edit Account")');
         this.confirmationMsg = page.locator('.alert.alert-success.alert-dismissible');
+        this.logoLink = page.locator("div[id='logo'] a");
     }
 
     /**
@@ -53,8 +56,13 @@ export class MyAccountPage {
      * @returns {Promise<boolean>}
      */
     async isConfirmationMsgDisplayed(): Promise<boolean> {
-        // .isVisible() is a clean way to check for element existence/visibility
-        return await this.confirmationMsg.isVisible();
+
+        try {
+            await this.confirmationMsg.waitFor({ state: 'visible', timeout: 3000 });
+            return true;
+        } catch {
+            return false;
+        }
     }
 
 
@@ -66,5 +74,13 @@ export class MyAccountPage {
         return (await this.confirmationMsg.textContent())?.trim() ?? '';
     }
 
+    /**
+     * Navigate to homepage
+     * @returns Promise<HomePage> - Returns HomePage instance
+     */
+    async navigateToHomePage(): Promise<HomePage> {
+        await this.logoLink.click();
+        return new HomePage(this.page);
+    }
     
 }

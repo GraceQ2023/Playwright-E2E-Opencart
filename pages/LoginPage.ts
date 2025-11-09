@@ -23,7 +23,7 @@ export class LoginPage {
      * Check if login page is loaded
      * @returns 
      */
-    async isLoginPageLoaded(): Promise<boolean> {
+    async isPageLoaded(): Promise<boolean> {
         let title:string = await this.page.title();
         if(title.includes('Account Login')){
             return true;

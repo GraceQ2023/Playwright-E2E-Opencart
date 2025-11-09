@@ -21,6 +21,7 @@ export class MyAccInfoPage {
     private readonly telInput: Locator;
     private readonly continueBtn: Locator;
     private readonly backBtn: Locator;
+    private readonly warningAlert: Locator;
 
 
     constructor(page: Page) {
@@ -33,6 +34,7 @@ export class MyAccInfoPage {
         this.telInput = page.locator('#input-telephone');
         this.continueBtn = page.locator('input[type="submit"]');
         this.backBtn = page.locator('a:has-text("Back")');
+        this.warningAlert = page.locator('div.alert.alert-danger.alert-dismissible');
     }
 
     async isPageLoaded(): Promise<boolean> {
@@ -99,4 +101,22 @@ export class MyAccInfoPage {
         return { firstName, lastName, email, telephone };
     }
 
+
+    async isWarningAlertDisplayed(): Promise<boolean> {
+
+        try {
+            await this.warningAlert.waitFor({ state: 'visible', timeout: 3000 });
+            return true;
+        } catch {
+            return false;
+        }
+    }
+
+
+    async getWarningAlertText(): Promise<string> {
+        const alertText = await this.warningAlert.textContent();
+        return alertText?.trim() || '';
+    }
+
 }
+

@@ -71,8 +71,5 @@ export class ProductPage {
         return new CartPage(this.page);
     }
 
-    async isConfirmationAlertDisplayed(): Promise<boolean> {
-    return await this.confirmationAlert.isVisible();
-}
 
 }

@@ -16,7 +16,7 @@ export class LogoutPage {
      * check if logout was successful
      * @returns {Promise<boolean>}
      */
-    async isLogoutSuccess(): Promise<boolean> {
+    async isLoggedOutMessageDisplayed(): Promise<boolean> {
         const contentText = await this.logoutMsg.textContent() ?? '';
         return contentText.includes('You have been logged off your account');
     }
