@@ -1,0 +1,9 @@
+testName,fName,lName,email,tel,pwd,confirmPwd,agreePrivacy,expectedResult,expectedMsg
+Valid registration,RandomFirst,RandomLast,RandomEmail,RandomTel,Test@123,Test@123,true,success,Your Account Has Been Created!
+Password mismatch,RandomFirst,RandomLast,RandomEmail,RandomTel,Test@123,Test@456,true,fieldError,Password confirmation does not match password!
+Email already registered,RandomFirst,RandomLast,grace.test@gmail.com,RandomTel,Test@123,Test@123,true,warning,Warning: E-Mail Address is already registered!
+Privacy policy not accepted,RandomFirst,RandomLast,RandomEmail,RandomTel,Test@123,Test@123,false,warning,Warning: You must agree to the Privacy Policy!
+Missing first name,,RandomLast,RandomEmail,RandomTel,Test@123,Test@123,true,fieldError,First Name must be between 1 and 32 characters!
+Missing last name,RandomFirst,,RandomEmail,RandomTel,Test@123,Test@123,true,fieldError,Last Name must be between 1 and 32 characters!
+Missing telephone,RandomFirst,RandomLast,RandomEmail,,Test@123,Test@123,true,fieldError,Telephone must be between 3 and 32 characters!
+Missing email, RandomFirst,RandomLast,,RandomTel,Test@123,Test@123,true,fieldError,E-Mail Address does not appear to be valid!

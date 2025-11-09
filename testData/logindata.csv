@@ -1,0 +1,3 @@
+testName,email,password,expected
+Valid login,grace.test@gmail.com,test1234,success
+Invalid login,invalidtest@gmail.com,invalid1234,failure
