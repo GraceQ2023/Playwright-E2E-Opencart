@@ -1,4 +1,5 @@
 import{Page, Locator} from '@playwright/test';
+import { OrderConfirmationPage } from './OrderConfirmationPage';
 
 /**
  *  NOTE: The checkout process on the demo site is not fully functional.
@@ -149,6 +150,8 @@ export class CheckoutPage {
          * The rest of the steps are currently not functional in the demo site.
          * - Expand the shipping address section and proceed through the delivery and payment steps
          * 
+         * // Further checkout steps would go here if supported
+         * 
          * Below are the intended steps commented out:
          * await this.waitForSectionToExpand('collapse-shipping-address');
          * await this.continueDeliveryAddressBtn.click();
@@ -156,6 +159,13 @@ export class CheckoutPage {
          * await this.termsCheckbox.check();
          * await this.continuePaymentBtn.click();
          */
+
+
+        await this.waitForSectionToExpand('collapse-shipping-address');
+        await this.deliveryAddressContinueBtn.click();
+        await this.deliveryMethodContinueBtn.click();
+        await this.termsCheckbox.check();
+        await this.continuePaymentBtn.click();
 
     }
 
@@ -184,6 +194,8 @@ export class CheckoutPage {
          * await this.termsCheckbox.check();
          * await this.continuePaymentBtn.click();
          */
+
+
     }
 
 
@@ -204,8 +216,10 @@ export class CheckoutPage {
     /**
      * Click confirm order button
      */
-    async clickConfirmOrder() {
+    async clickConfirmOrder() : Promise<OrderConfirmationPage> {
         await this.confirmOrderBtn.click();
+        return new OrderConfirmationPage(this.page);
+
     }
 
     /**
@@ -228,14 +242,32 @@ export class CheckoutPage {
      * Check if order confirmation message is displayed
      * @returns 
      */
-    async isConfirmOrderMsgDisplayed(): Promise<boolean> {
-        try {
-            await this.confirmOrderMsg.waitFor({ state: 'visible', timeout: 5000 });
-            const confirmOrderMsg = await this.confirmOrderMsg.textContent();
-            return confirmOrderMsg?.includes('Your order has been placed!') || false;
-        } catch {
-            return false;
-        }
-    }
+    // async isConfirmOrderMsgDisplayed(): Promise<boolean> {
+
+    //      try {
+    //     // Wait for navigation first — safer after a "Confirm Order" click
+    //     await this.page.waitForLoadState('domcontentloaded', { timeout: 10000 });
+
+    //     // Then wait for the message itself
+    //     await this.confirmOrderMsg.waitFor({ state: 'visible', timeout: 8000 });
+
+    //     const msg = (await this.confirmOrderMsg.textContent())?.trim() ?? '';
+    //     console.log(`✅ Confirm order message text: "${msg}"`);
+
+    //     // Be slightly lenient with match (case-insensitive, partial)
+    //     return msg.toLowerCase().includes('your order has been placed');
+    // } catch (error) {
+    //     console.error(`❌ Failed to detect confirm order message: ${error}`);
+    //     return false;
+    // }
+
+        // try {
+        //     await this.confirmOrderMsg.waitFor({ state: 'visible', timeout: 5000 });
+        //     const confirmOrderMsg = await this.confirmOrderMsg.textContent();
+        //     return confirmOrderMsg?.includes('Your order has been placed!') || false;
+        // } catch {
+        //     return false;
+        // }
+    // }
 
 }

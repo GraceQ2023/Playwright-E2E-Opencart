@@ -23,7 +23,9 @@ export class CartPage {
         // initialize locators
         this.cartTableRows = page.locator('#checkout-cart form table.table-bordered tbody tr'); // only rows in the cart table body, not including header row for column names
         this.continueShoppingBtn = page.getByRole('link', { name: 'Continue Shopping' });
-        this.checkoutBtn = page.getByRole('link', { name: 'Checkout' });
+        // this.checkoutBtn = page.getByRole('link', { name: 'Checkout' });
+
+        this.checkoutBtn = page.locator("//a[@class='btn btn-primary']")
     }
 
     /**
@@ -44,7 +46,6 @@ export class CartPage {
 
         const rows = this.cartTableRows;
         const count = await rows.count();
-        console.log(`🛒 Found ${count} cart row(s).`);
 
         for (let i = 0; i < count; i++) {
             const row = rows.nth(i);

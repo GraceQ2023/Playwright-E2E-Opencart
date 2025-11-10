@@ -1,3 +1,10 @@
+
+
+
+// Step 7: Attempt checkout process (skipped due to demo site limitations)
+// Note: Checkout steps are skipped as the demo site does not support full checkout functionality
+
+
 import { test, expect } from '@playwright/test';
 import { CheckoutPage } from '../pages/CheckoutPage';
 import { RandomDataUtil } from '../utils/randomDataGenerator';

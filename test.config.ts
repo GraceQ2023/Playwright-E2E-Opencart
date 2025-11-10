@@ -11,7 +11,7 @@ export class TestConfig{
     };
 
     static readonly newUser = {
-        email: 'test10@gmail.com',
+        email: 'test8@gmail.com',
         password: 'test'
     };
 

@@ -41,7 +41,7 @@ export default defineConfig({
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
-    video: 'retain-on-failure',
+    video: 'on', //'retain-on-failure',
     viewport: { width: 1280, height: 720 }, // set default viewport size for consistency
     ignoreHTTPSErrors: true, // ignore HTTPS errors
     permissions:['geolocation'], // set necessary permissions

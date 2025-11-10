@@ -3,6 +3,7 @@ import { RegisterPage } from './RegisterPage';
 import { LoginPage } from './LoginPage';
 import { CartPage } from './CartPage';
 import { CheckoutPage } from './CheckoutPage';
+import { LogoutPage } from './LogoutPage';
 
 export class HomePage {
     private readonly page: Page; // private keyword to restrict access to this variable, enforces encapsulation
@@ -17,6 +18,7 @@ export class HomePage {
     private readonly confirmationAlert: Locator;
     private readonly shoppingCartLink: Locator; 
     private readonly checkoutLink: Locator
+    private readonly logoutLink: Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -25,12 +27,16 @@ export class HomePage {
         this.myAccountDropdown = page.locator('span:has-text("My Account")')
         this.registerLink = page.getByRole('link', { name: 'Register' })
         this.loginLink = page.getByRole('link', { name: 'Login' })
+        // this.loginLink = page.locator('#top-links a:has-text("Login")')
+        // this.loginLink = page.locator('ul.dropdown-menu li a:has-text("Login")');
+
         this.searchInput = page.getByRole('textbox', { name: 'Search' })
         this.searchButton = page.locator('#search button[type="button"]');
         this.confirmationAlert = page.locator(".alert.alert-success.alert-dismissible");
         this.shoppingCartLink = page.getByTitle('Shopping Cart');
         this.checkoutLink = page.locator('span:has-text("Checkout")');
         this.firstFeatureProduct = page.locator('div.product-thumb.transition').first();
+        this.logoutLink = page.locator('a:has-text("Logout")')
     }
 
 
@@ -62,6 +68,13 @@ export class HomePage {
         await this.myAccountDropdown.click();
         await this.loginLink.click();
         return new LoginPage(this.page);
+    }
+
+
+    async goToLogoutPage(): Promise<LogoutPage> {
+        await this.myAccountDropdown.click();
+        await this.logoutLink.click();
+        return new LogoutPage(this.page);
     }
 
 

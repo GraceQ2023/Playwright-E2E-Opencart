@@ -1,6 +1,15 @@
 
 import {Page, Locator} from '@playwright/test';
 
+interface registerData {
+    fName: string, 
+    lName: string, 
+    email: string, 
+    tel: string, 
+    pwd: string, 
+    confirmPwd: string
+}
+
 export class RegisterPage {
     private readonly page: Page;
 
@@ -48,20 +57,14 @@ export class RegisterPage {
      * Fill registration form
      * @param userData 
      */
-    async fillRegistrationForm(userData: {
-        fName: string, 
-        lName: string, 
-        email: string, 
-        tel: string, 
-        pwd: string, 
-        confirmPwd: string
-    }): Promise<void> {
-        await this.fNameInput.fill(userData.fName);
-        await this.lNameInput.fill(userData.lName);
-        await this.emailInput.fill(userData.email);
-        await this.telInput.fill(userData.tel);
-        await this.pwInput.fill(userData.pwd);
-        await this.confirmPwInput.fill(userData.confirmPwd);
+    async fillRegistrationForm(data: registerData): Promise<void> {
+    
+        await this.fNameInput.fill(data.fName);
+        await this.lNameInput.fill(data.lName);
+        await this.emailInput.fill(data.email);
+        await this.telInput.fill(data.tel);
+        await this.pwInput.fill(data.pwd);
+        await this.confirmPwInput.fill(data.confirmPwd);
     }
 
     
