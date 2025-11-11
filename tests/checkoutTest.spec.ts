@@ -1,10 +1,4 @@
 
-
-
-// Step 7: Attempt checkout process (skipped due to demo site limitations)
-// Note: Checkout steps are skipped as the demo site does not support full checkout functionality
-
-
 import { test, expect } from '@playwright/test';
 import { CheckoutPage } from '../pages/CheckoutPage';
 import { RandomDataUtil } from '../utils/randomDataGenerator';
@@ -12,18 +6,28 @@ import { HomePage } from '../pages/HomePage';
 import { LoginPage } from '../pages/LoginPage';
 import { TestConfig } from '../test.config';
 import { MyAccountPage } from '../pages/MyAccountPage';
+import { OrderConfirmationPage } from '../pages/OrderConfirmationPage';
+
+/**
+ *  The checkout tests cover various checkout scenarios:
+ *  - Guest checkout
+ *  - Registered user first checkout
+ *  - Returning customer checkout
+ * 
+ * However, due to the demo site's limitations, the checkout process is not fully functional, and not stable for automation.
+ * Therefore, tests are marked as skipped until the site supports complete checkout functionality.
+ */
 
 
 test.describe('Checkout Functionality', () => {
+
     let homePage: HomePage;
     let loginPage: LoginPage;
     let checkoutPage: CheckoutPage;
     let myAccountPage: MyAccountPage;
+    let orderConfirmationPage: OrderConfirmationPage;
 
     test.beforeEach(async ({page}) => {
-
-        // initialize page objects
-
         homePage = new HomePage(page);
         loginPage = new LoginPage(page);
         checkoutPage = new CheckoutPage(page);
@@ -33,7 +37,7 @@ test.describe('Checkout Functionality', () => {
 
 
 
-    test('Guest checkout proceeds up to payment warning', async () => {
+    test.skip ('Verify guest checkout process @wip', async () => {
     
         await homePage.addProductToCartFromHomePage();
         await homePage.navigateToCheckout();
@@ -53,13 +57,15 @@ test.describe('Checkout Functionality', () => {
             state: 'Victoria',
         });
 
-        expect(await checkoutPage.isWarningMsgDisplayed()).toBeTruthy();
+        orderConfirmationPage = await checkoutPage.clickConfirmOrder();  
+        expect (await orderConfirmationPage.isPageLoaded(), 'Order confirmation page should be loaded').toBeTruthy();
+        // expect(await checkoutPage.isWarningMsgDisplayed()).toBeTruthy();
 
     });
 
 
 
-    test('Registered user first checkout proceeds up to payment warning', async () => {
+    test.skip ('Verify registered user first checkout process @wip', async () => {
 
         await homePage.goToLoginPage();
         expect.soft(await loginPage.isPageLoaded()).toBeTruthy();
@@ -82,11 +88,13 @@ test.describe('Checkout Functionality', () => {
             state: 'New South Wales',
         });
 
-        expect(await checkoutPage.isWarningMsgDisplayed()).toBeTruthy();
+        orderConfirmationPage = await checkoutPage.clickConfirmOrder();  
+        expect (await orderConfirmationPage.isPageLoaded(), 'Order confirmation page should be loaded').toBeTruthy();
+
     });
 
 
-    test('Returning customer checkout proceeds up to payment warning', async () => {
+    test.skip ('Verify returning customer checkout process (up to warning shown) @wip', async () => {
 
         await homePage.addProductToCartFromHomePage();
         expect.soft(await homePage.isConfirmAlertDisplayed()).toBeTruthy();
@@ -94,6 +102,7 @@ test.describe('Checkout Functionality', () => {
         expect.soft(await checkoutPage.isPageLoaded()).toBeTruthy();
 
         await checkoutPage.loginAsReturningCustomer(TestConfig.validUser.email, TestConfig.validUser.password);
+        await checkoutPage.fillCheckoutForm_ReturningCustomer();
 
         expect(await checkoutPage.isWarningMsgDisplayed()).toBeTruthy();
     });

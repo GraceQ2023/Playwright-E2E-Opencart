@@ -7,18 +7,14 @@ import { RandomDataUtil } from '../utils/randomDataGenerator';
 
 
 test.describe('User Registration Functionality', () => {
+
     let homePage: HomePage;
     let registerPage: RegisterPage;
-    let config: TestConfig;
 
-    // Hook runs before and after each test in this describe block 
     test.beforeEach(async ({page}) => {
-
-        // initialize page objects
-        config = new TestConfig(); 
+        
         homePage = new HomePage(page);
         registerPage = new RegisterPage(page);
-
         await page.goto(TestConfig.appUrl); 
         await homePage.goToRegisterPage();
     });
@@ -33,12 +29,12 @@ test.describe('User Registration Functionality', () => {
         const generatedPwd = RandomDataUtil.generatePassword();
         await registerPage.fillRegistrationForm(
             {
-            fName: RandomDataUtil.generateFirstName(),
-            lName: RandomDataUtil.generateLastName(),
-            email: RandomDataUtil.generateEmail(),
-            tel: RandomDataUtil.generatePhoneNumber(),
-            pwd : generatedPwd,
-            confirmPwd: generatedPwd,
+                fName: RandomDataUtil.generateFirstName(),
+                lName: RandomDataUtil.generateLastName(),
+                email: RandomDataUtil.generateEmail(),
+                tel: RandomDataUtil.generatePhoneNumber(),
+                pwd : generatedPwd,
+                confirmPwd: generatedPwd,
             }
         );
 
@@ -51,19 +47,19 @@ test.describe('User Registration Functionality', () => {
     });
 
 
-    // Invalid registration test 1 - password mismatch
-    test('Verify invalid registration 1 - password mismatch @regression', async () => {
+    // Invalid registration test 1: password mismatch
+    test('Verify invalid registration 1: password mismatch @regression', async () => {
 
         expect(await registerPage.isPageLoaded()).toBeTruthy();
-        // fill in registration form with random data
+        
         await registerPage.fillRegistrationForm(
             {
-            fName: RandomDataUtil.generateFirstName(),
-            lName: RandomDataUtil.generateLastName(),
-            email: RandomDataUtil.generateEmail(),
-            tel: RandomDataUtil.generatePhoneNumber(),
-            pwd: RandomDataUtil.generatePassword(),
-            confirmPwd: RandomDataUtil.generatePassword(),
+                fName: RandomDataUtil.generateFirstName(),
+                lName: RandomDataUtil.generateLastName(),
+                email: RandomDataUtil.generateEmail(),
+                tel: RandomDataUtil.generatePhoneNumber(),
+                pwd: RandomDataUtil.generatePassword(),
+                confirmPwd: RandomDataUtil.generatePassword(),
             }
         );
 
@@ -76,11 +72,11 @@ test.describe('User Registration Functionality', () => {
     });
 
 
-    // Invalid registration test 2 - email already registered
-    test('Verify invalid registration 2 - email already registered @regression', async () => {
+    // Invalid registration test 2: email already registered
+    test('Verify invalid registration 2: email already registered @regression', async () => {
 
         expect(await registerPage.isPageLoaded()).toBeTruthy();
-        // fill in registration form with random data
+        
         const generatedPwd = RandomDataUtil.generatePassword();
         await registerPage.fillRegistrationForm(
             {
@@ -97,25 +93,26 @@ test.describe('User Registration Functionality', () => {
         await registerPage.submitRegistrationForm();
 
         // verify warning message is shown 
-         const warningMsg: string = await registerPage.getWarningMsg();
+        const warningMsg: string = await registerPage.getWarningMsg();
         expect(warningMsg).toContain('Warning: E-Mail Address is already registered!');
+
     });
 
 
-    // Invalid registration test 3 - not checking privacy policy
-    test('Verify invalid registration 3 - not checking privacy policy @regression', async () => {
+    // Invalid registration test 3: not checking privacy policy
+    test('Verify invalid registration 3: not checking privacy policy @regression', async () => {
 
         expect(await registerPage.isPageLoaded()).toBeTruthy();
-        // fill in registration form with random data
+ 
         const generatedPwd = RandomDataUtil.generatePassword();
         await registerPage.fillRegistrationForm(
             {
-            fName: RandomDataUtil.generateFirstName(),
-            lName: RandomDataUtil.generateLastName(),
-            email: RandomDataUtil.generateEmail(),
-            tel: RandomDataUtil.generatePhoneNumber(),
-            pwd : generatedPwd,
-            confirmPwd: generatedPwd,
+                fName: RandomDataUtil.generateFirstName(),
+                lName: RandomDataUtil.generateLastName(),
+                email: RandomDataUtil.generateEmail(),
+                tel: RandomDataUtil.generatePhoneNumber(),
+                pwd : generatedPwd,
+                confirmPwd: generatedPwd,
             }
         );
 

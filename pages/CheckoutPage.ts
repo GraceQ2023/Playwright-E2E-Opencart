@@ -2,10 +2,16 @@ import{Page, Locator} from '@playwright/test';
 import { OrderConfirmationPage } from './OrderConfirmationPage';
 
 /**
- *  NOTE: The checkout process on the demo site is not fully functional.
+ * 
+ * The checkout methods cover various checkout scenarios:
+ *  - Guest checkout
+ *  - Registered user first checkout
+ *  - Returning customer checkout
+ * 
+ *  NOTE: The checkout process on the demo site is not fully functional and not stable for automation.
  *  The steps related to shipping method selection, payment method selection, and order confirmation
- *  cannot be completed as expected. Therefore, the methods below focus on filling out the forms
- *  and navigating up to the point where the process cannot proceed further.
+ *  cannot be completed as expected. Therefore, some methods are implemented but not fully utilized in tests.
+ * 
  */
 
 
@@ -32,9 +38,9 @@ interface RegisteredCheckoutData {
 }
 
 export class CheckoutPage {
+
     private readonly page: Page;
     
-    // Locators
     private readonly guestRadio: Locator;
     private readonly accContinueBtn: Locator;
     private readonly returningCustomerEmailInput: Locator;
@@ -83,18 +89,16 @@ export class CheckoutPage {
         this.billingStateDropdown = page.locator('#input-payment-zone');
         this.continueBillingDetailsBtn_guest = page.locator("#button-guest");
         this.continueBillingDetailsBtn = page.locator('#button-payment-address')
-
         this.existingAddressRadio = page.locator('input[name="payment_address"][value="existing"]');
         
-        
-        // delivery, payment and confirm order locators
+        // delivery, payment and confirm order locators. Note: these steps are not functional in demo site
         this.deliveryAddressContinueBtn = page.locator('#button-shipping-address');
         this.deliveryMethodContinueBtn = page.locator('#button-shipping-method');
         this.termsCheckbox = page.locator('input[name="agree"]');
         this.continuePaymentBtn = page.locator('#button-payment-method');
         this.confirmOrderBtn = page.locator('#button-confirm');
 
-        // messages
+        // messages. Note: these messages are not functional in demo site
         this.confirmOrderMsg = page.locator('#content h1');
         this.warningAlert = page.locator('div.alert.alert-warning.alert-dismissible');
     }
@@ -135,8 +139,9 @@ export class CheckoutPage {
     }
 
 
-    // fill in checkout form for registered user (first order)
+    // Fill in checkout form for registered user for placing first order
     async fillCheckoutForm_RegisteredUserFirstOrder(data: RegisteredCheckoutData): Promise<void>  {
+
         await this.billingFirstNameInput.fill(data.firstName);
         await this.billingLastNameInput.fill(data.lastName);
         await this.billingAddressInput.fill(data.address);
@@ -146,31 +151,15 @@ export class CheckoutPage {
         await this.billingStateDropdown.selectOption({ label: data.state });
         await this.continueBillingDetailsBtn.click();
 
-        /**
-         * The rest of the steps are currently not functional in the demo site.
-         * - Expand the shipping address section and proceed through the delivery and payment steps
-         * 
-         * // Further checkout steps would go here if supported
-         * 
-         * Below are the intended steps commented out:
-         * await this.waitForSectionToExpand('collapse-shipping-address');
-         * await this.continueDeliveryAddressBtn.click();
-         * await this.continueDeliveryMethodBtn.click();
-         * await this.termsCheckbox.check();
-         * await this.continuePaymentBtn.click();
-         */
-
-
         await this.waitForSectionToExpand('collapse-shipping-address');
         await this.deliveryAddressContinueBtn.click();
         await this.deliveryMethodContinueBtn.click();
         await this.termsCheckbox.check();
         await this.continuePaymentBtn.click();
-
     }
 
 
-    // fill in checkout form - guest checkout
+    // Fill in checkout form - guest checkout
     async fillCheckoutForm_GuestCheckout(guestData: GuestCheckoutData): Promise<void> {
         await this.billingFirstNameInput.fill(guestData.firstName);
         await this.billingLastNameInput.fill(guestData.lastName);
@@ -182,34 +171,26 @@ export class CheckoutPage {
         await this.billingCountryDropdown.selectOption({ label: guestData.country });
         await this.billingStateDropdown.selectOption({ label: guestData.state });
         await this.continueBillingDetailsBtn_guest.click();
-    
-        /**
-         * The rest of the steps are currently not functional in the demo site.
-         * - Expand the shipping address section and proceed through the delivery and payment steps
-         * 
-         * Below are the intended steps commented out:
-         * await this.waitForSectionToExpand('collapse-shipping-address');
-         * await this.continueDeliveryAddressBtn.click();
-         * await this.continueDeliveryMethodBtn.click();
-         * await this.termsCheckbox.check();
-         * await this.continuePaymentBtn.click();
-         */
 
-
+        await this.waitForSectionToExpand('collapse-shipping-address');  
+        await this.deliveryAddressContinueBtn.click(); // not functional in demo site
+        await this.deliveryMethodContinueBtn.click();
+        await this.termsCheckbox.check();
+        await this.continuePaymentBtn.click();
     }
 
 
-    // fill in checkout form - registered returning user
+    // Fill in checkout form - returning user
     async fillCheckoutForm_ReturningCustomer(): Promise<void> {
 
-        await this.page.waitForSelector('#collapse-payment-address', { state: 'visible', timeout: 5000 });
+        await this.page.waitForSelector('#collapse-payment-address', { state: 'visible', timeout: 6000 });
         const isExistingChecked = await this.existingAddressRadio.isChecked();
 
         if (!isExistingChecked) {
             await this.existingAddressRadio.check();
         }
-        await this.continueBillingDetailsBtn.click();
 
+        await this.continueBillingDetailsBtn.click();
     }
         
 
@@ -219,55 +200,21 @@ export class CheckoutPage {
     async clickConfirmOrder() : Promise<OrderConfirmationPage> {
         await this.confirmOrderBtn.click();
         return new OrderConfirmationPage(this.page);
-
     }
+
 
     /**
      * Check if warning message is displayed
      * @returns 
      */
-
     async isWarningMsgDisplayed(): Promise<boolean> {
         try {
-            await this.warningAlert.waitFor({ state: 'visible', timeout: 5000 });
+            await this.warningAlert.waitFor({ state: 'visible', timeout: 6000 });
             const warningMsg = await this.warningAlert.textContent();
             return warningMsg?.includes('Warning: No Payment options are available. Please contact us for assistance!') || false;
         } catch {
             return false;
         }
     }
-
-
-    /**
-     * Check if order confirmation message is displayed
-     * @returns 
-     */
-    // async isConfirmOrderMsgDisplayed(): Promise<boolean> {
-
-    //      try {
-    //     // Wait for navigation first — safer after a "Confirm Order" click
-    //     await this.page.waitForLoadState('domcontentloaded', { timeout: 10000 });
-
-    //     // Then wait for the message itself
-    //     await this.confirmOrderMsg.waitFor({ state: 'visible', timeout: 8000 });
-
-    //     const msg = (await this.confirmOrderMsg.textContent())?.trim() ?? '';
-    //     console.log(`✅ Confirm order message text: "${msg}"`);
-
-    //     // Be slightly lenient with match (case-insensitive, partial)
-    //     return msg.toLowerCase().includes('your order has been placed');
-    // } catch (error) {
-    //     console.error(`❌ Failed to detect confirm order message: ${error}`);
-    //     return false;
-    // }
-
-        // try {
-        //     await this.confirmOrderMsg.waitFor({ state: 'visible', timeout: 5000 });
-        //     const confirmOrderMsg = await this.confirmOrderMsg.textContent();
-        //     return confirmOrderMsg?.includes('Your order has been placed!') || false;
-        // } catch {
-        //     return false;
-        // }
-    // }
 
 }

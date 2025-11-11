@@ -1,5 +1,4 @@
-import { Page, Locator, expect } from '@playwright/test';
-import { LogoutPage } from './LogoutPage'; // Import LogoutPage if needed
+import { Page, Locator} from '@playwright/test';
 import { MyAccountPage } from './MyAccountPage';
 
 
@@ -12,9 +11,9 @@ export interface AccountData {
 
 
 export class MyAccInfoPage {
+
     private readonly page: Page;
     
-    // Locators using CSS selectors
     private readonly fNameInput: Locator;
     private readonly lNameInput: Locator;
     private readonly emailInput: Locator;
@@ -27,7 +26,6 @@ export class MyAccInfoPage {
     constructor(page: Page) {
         this.page = page;
         
-        // Initialize locators with CSS selectors
         this.fNameInput = page.locator('#input-firstname');
         this.lNameInput = page.locator('#input-lastname');
         this.emailInput = page.locator('#input-email');
@@ -37,13 +35,17 @@ export class MyAccInfoPage {
         this.warningAlert = page.locator('div.alert.alert-danger.alert-dismissible');
     }
 
+    /**
+     * Check if My Account Information page is loaded
+     * @returns 
+     */
     async isPageLoaded(): Promise<boolean> {
         let title:string = await this.page.title();
         return title.toLowerCase().includes('my account information');
     }
 
     /**
-     * Update account information fields with the provided data, can be partial update 
+     * Update account information fields with the provided data
      * @param data 
      */
     async updateAccInfo(data: AccountData): Promise<void> {
@@ -72,7 +74,7 @@ export class MyAccInfoPage {
      */
     async clickContinue():Promise<MyAccountPage> {
         await this.continueBtn.click();
-         await this.page.waitForLoadState('networkidle'); // wait for redirect + data loading
+        await this.page.waitForLoadState('networkidle'); // wait for redirect + data loading
         return new MyAccountPage(this.page);
     }
 
@@ -93,8 +95,9 @@ export class MyAccInfoPage {
      * @returns {Promise<AccountData>}
      */
     async getAccInfo(): Promise<AccountData> {
-        // We use .inputValue() which is the recommended Playwright method for getting the current value of an input field.
-        const firstName = await this.fNameInput.inputValue();
+
+        // using inputValue() to get the value of input field
+        const firstName = await this.fNameInput.inputValue(); 
         const lastName = await this.lNameInput.inputValue();
         const email = await this.emailInput.inputValue();
         const telephone = await this.telInput.inputValue();
@@ -102,6 +105,10 @@ export class MyAccInfoPage {
     }
 
 
+    /**
+     * Check if warning alert is displayed
+     * @returns 
+     */
     async isWarningAlertDisplayed(): Promise<boolean> {
 
         try {
@@ -112,7 +119,10 @@ export class MyAccInfoPage {
         }
     }
 
-
+    /**
+     * Get warning alert text
+     * @returns 
+     */
     async getWarningAlertText(): Promise<string> {
         const alertText = await this.warningAlert.textContent();
         return alertText?.trim() || '';

@@ -7,7 +7,9 @@ import { HomePage } from '../pages/HomePage';
 import { RandomDataUtil } from '../utils/randomDataGenerator';
 
 
-// load csv test data 
+// Data driven test for user registration 
+
+// Load test data from CSV
 const csvPath = "testData/registerdata.csv";
 let registerTestData: any[] = [];
 
@@ -18,7 +20,7 @@ try {
 }
 
 
-test.describe('User Registration Functionality - Data Driven', () => {
+test.describe('User Registration Functionality - Data Driven Test', () => {
 
     for (const data of registerTestData) {
 
@@ -30,7 +32,6 @@ test.describe('User Registration Functionality - Data Driven', () => {
             await page.goto(TestConfig.appUrl);
             await homePage.goToRegisterPage();
             expect(await registerPage.isPageLoaded()).toBeTruthy();
-
 
             // generate random data where indicated
             const firstName = data.fName === 'RandomFirst' ? RandomDataUtil.generateFirstName() : data.fName;

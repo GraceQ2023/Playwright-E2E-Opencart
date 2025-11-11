@@ -2,6 +2,7 @@ import { Page, Locator } from '@playwright/test';
 import { HomePage } from './HomePage';
 
 export class LogoutPage {
+    
     private readonly page: Page;
     private readonly continueBtn: Locator;
     private readonly logoutMsg: Locator;

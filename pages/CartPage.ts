@@ -2,6 +2,7 @@ import{Page, Locator} from '@playwright/test';
 import { HomePage } from './HomePage';
 import { CheckoutPage } from './CheckoutPage';
 
+
 export interface CartItem{
     name: string;
     quantity: number;
@@ -21,10 +22,9 @@ export class CartPage {
         this.page = page;
 
         // initialize locators
-        this.cartTableRows = page.locator('#checkout-cart form table.table-bordered tbody tr'); // only rows in the cart table body, not including header row for column names
+        this.cartTableRows = page.locator('#checkout-cart form table.table-bordered tbody tr'); // only rows in the cart table body, not including header row
         this.continueShoppingBtn = page.getByRole('link', { name: 'Continue Shopping' });
         // this.checkoutBtn = page.getByRole('link', { name: 'Checkout' });
-
         this.checkoutBtn = page.locator("//a[@class='btn btn-primary']")
     }
 
@@ -40,20 +40,20 @@ export class CartPage {
 
     async getCartItems(): Promise<CartItem[]> {
 
-        const items: CartItem[] = [];
+        const items: CartItem[] = [];  // array to hold cart items
 
-        await this.page.waitForSelector('table.table-bordered tbody tr td.text-left a', { state: 'visible', timeout: 20000 });
+        await this.page.waitForSelector('table.table-bordered tbody tr td.text-left a', { state: 'visible', timeout: 20000 }); // wait for product links in cart to be visible
 
-        const rows = this.cartTableRows;
+        const rows = this.cartTableRows;  // get all rows in the cart table body
         const count = await rows.count();
 
+        // iterate through each row in the cart table to extract product details
         for (let i = 0; i < count; i++) {
             const row = rows.nth(i);
-
             const name = (await row.locator('td.text-left >> a').textContent())?.trim() || '';
             const quantityText = (await row.locator('td.text-left input.form-control').inputValue())?.trim() || '0';
             const totalPriceText = (await row.locator('td.text-right').last().textContent())?.trim() || '';
-            const totalPrice = parseFloat(totalPriceText.replace(/[^0-9.]/g, ''));   // convert price text to number: remove $ and commas, e.g. $1,806.00 -> 1806.00
+            const totalPrice = parseFloat(totalPriceText.replace(/[^0-9.]/g, ''));   // convert price text to number(remove $ and commas), e.g. $1,806.00 -> 1806.00
 
             items.push({
                 name,
@@ -75,7 +75,7 @@ export class CartPage {
 
 
     /**
-     * Click on Continue Shopping button to go back to home page
+     * Click on continue shopping button to go back to home page
      */
     async clickContinueShopping(): Promise<HomePage> {
         await this.continueShoppingBtn.click();
@@ -84,13 +84,12 @@ export class CartPage {
 
 
     /**
-     * Click on the Checkout button to proceed to checkout
+     * Click on the checkout button to proceed to checkout
      */
     async clickCheckoutBtn(): Promise<CheckoutPage> {
         await this.checkoutBtn.click();
         return new CheckoutPage(this.page);
     }
-
 
 }
 

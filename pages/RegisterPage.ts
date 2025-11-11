@@ -55,7 +55,7 @@ export class RegisterPage {
 
     /**
      * Fill registration form
-     * @param userData 
+     * @param data
      */
     async fillRegistrationForm(data: registerData): Promise<void> {
     
@@ -104,7 +104,7 @@ export class RegisterPage {
      */
     async getWarningMsg(): Promise<string> {
         if (await this.warningMsg.isVisible()) {
-        return (await this.warningMsg.textContent())?.trim() ?? '';
+            return (await this.warningMsg.textContent())?.trim() ?? '';
         }   
         return '';
     }

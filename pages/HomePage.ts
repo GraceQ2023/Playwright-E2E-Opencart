@@ -4,8 +4,10 @@ import { LoginPage } from './LoginPage';
 import { CartPage } from './CartPage';
 import { CheckoutPage } from './CheckoutPage';
 import { LogoutPage } from './LogoutPage';
+import { SearchResultPage } from './SearchResultPage';
 
 export class HomePage {
+    
     private readonly page: Page; // private keyword to restrict access to this variable, enforces encapsulation
 
     // define locators 
@@ -27,9 +29,6 @@ export class HomePage {
         this.myAccountDropdown = page.locator('span:has-text("My Account")')
         this.registerLink = page.getByRole('link', { name: 'Register' })
         this.loginLink = page.getByRole('link', { name: 'Login' })
-        // this.loginLink = page.locator('#top-links a:has-text("Login")')
-        // this.loginLink = page.locator('ul.dropdown-menu li a:has-text("Login")');
-
         this.searchInput = page.getByRole('textbox', { name: 'Search' })
         this.searchButton = page.locator('#search button[type="button"]');
         this.confirmationAlert = page.locator(".alert.alert-success.alert-dismissible");
@@ -41,11 +40,12 @@ export class HomePage {
 
 
     /**
-     * Check if the homepage is loaded.
+     * Check if the homepage is loaded
      * @returns 
      */
     async isPageLoaded(): Promise<boolean> {
-        let title:string = await this.page.title();
+
+        let title = await this.page.title();
         if(title.includes('Your Store')){
             return true;
         }
@@ -56,6 +56,7 @@ export class HomePage {
      * Navigate to Register page
      */
     async goToRegisterPage(): Promise<RegisterPage> {
+
         await this.myAccountDropdown.click();
         await this.registerLink.click();
         return new RegisterPage(this.page);
@@ -65,13 +66,18 @@ export class HomePage {
      * Navigate to Login page
      */
     async goToLoginPage(): Promise<LoginPage> {
+
         await this.myAccountDropdown.click();
         await this.loginLink.click();
         return new LoginPage(this.page);
     }
 
-
+    /**
+     * Navigate to Logout page
+     * @returns 
+     */
     async goToLogoutPage(): Promise<LogoutPage> {
+
         await this.myAccountDropdown.click();
         await this.logoutLink.click();
         return new LogoutPage(this.page);
@@ -81,24 +87,25 @@ export class HomePage {
     /**
      * Search for a product 
      * @param productName 
+     * @returns {Promise<SearchResultPage>}
      */
-    async searchProduct(productName: string): Promise<void> {
+    async searchProduct(productName: string): Promise<SearchResultPage> {
+
         await this.searchInput.fill(productName.trim());
-        await Promise.all([
-            this.page.waitForLoadState('networkidle'),   // add wait for page load
-            this.searchButton.click(),
-        ]);
+        await this.searchButton.click();
+        return new SearchResultPage(this.page);
     }
 
 
     /**
      * Add product to cart from Homepage Featured product section
-     * @param productName 
-     * @param quantity 
+     * @param
+     * @return product name added to cart
      */
     async addProductToCartFromHomePage(): Promise<string> {
+
         const productName = (await this.firstFeatureProduct.locator('h4 a').innerText()).trim();
-        await this.firstFeatureProduct.scrollIntoViewIfNeeded();
+        await this.firstFeatureProduct.scrollIntoViewIfNeeded();  // ensure the element is in view
         await this.firstFeatureProduct.locator('button[onclick*="cart.add"]').click();
         return productName;
     }
@@ -117,7 +124,7 @@ export class HomePage {
             return false;
         }
     }
-
+    
 
     /**
      * Navigate to Shopping Cart page
@@ -129,14 +136,6 @@ export class HomePage {
         return new CartPage(this.page);
     }
 
-    // NOTE: only the checkout link inside the cart dropdown works for the complete checkout process
-    async openCartDropdown(): Promise<void> {
-
-        await this.page.locator('#cart button[data-toggle="dropdown"]').click();
-        await this.page.locator('#cart .dropdown-menu').waitFor({ state: 'visible' });
-    }
-
-
     /**
      * Navigate to checkout page
      * @returns Promise<CheckoutPage> - Returns CheckoutPage instance
@@ -146,13 +145,5 @@ export class HomePage {
         await this.checkoutLink.click();
         return new CheckoutPage(this.page);
     }
-
-    // async navigateToCheckout(): Promise<CheckoutPage> {
-
-    //     await this.openCartDropdown();
-    //     await this.checkoutLink.waitFor({ state: 'visible', timeout: 5000 });
-    //     await this.checkoutLink.click();
-    //     return new CheckoutPage(this.page);
-    // }
 
 }

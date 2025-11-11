@@ -11,7 +11,10 @@ export class TestConfig{
     };
 
     static readonly newUser = {
-        email: 'test8@gmail.com',
+        fName: 'test17',
+        lName: 'test17',
+        email: 'test17@gmail.com',
+        tel: '123456',
         password: 'test'
     };
 
@@ -28,13 +31,14 @@ static readonly product = {
     totalPrice: '$366.00'
 };
 
-// API & DB configs
-    static readonly apiEndpoint = 'http://localhost/opencart/api';
+
+// DB configs
+    // static readonly apiEndpoint = 'http://localhost/opencart/api';
     static readonly dbConfig = {
-        host: 'localhost',
-        user: 'root',
-        password: '',
-        database: 'openshop'
+        dbHost: 'localhost',
+        dbUser: 'root',
+        dbPassword: '',
+        dbName: 'openshop'
     };
 
 }

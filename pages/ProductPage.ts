@@ -2,18 +2,17 @@ import{Page, Locator} from '@playwright/test';
 import { CartPage } from './CartPage';
 
 export class ProductPage {
+
     private readonly page: Page;
 
-    // define locators
     private readonly quantityInput: Locator;
     private readonly addToCartButton: Locator;
     private readonly confirmationAlert: Locator;
     private readonly shoppingCartLink: Locator; 
 
     constructor(page: Page) {
-        this.page = page;
 
-        // initialize locators
+        this.page = page;
         this.quantityInput = page.locator("#input-quantity");
         this.addToCartButton = page.locator('#button-cart');
         this.confirmationAlert = page.locator(".alert.alert-success.alert-dismissible");
@@ -29,7 +28,10 @@ export class ProductPage {
         return title.includes(productName.toLowerCase());
     }
 
-
+    /**
+     * Set product quantity for adding to cart
+     * @param qty 
+     */
     async setQuantity(qty: string): Promise<void> {
         await this.quantityInput.fill('');
         await this.quantityInput.fill(qty);
@@ -48,12 +50,12 @@ export class ProductPage {
 
 
     /**
-     * Check if confirmation alert is displayed and contains expected text
+     * Check if confirmation is displayed after adding product to cart
      * @returns 
      */
     async isConfirmAlertDisplayed(): Promise<boolean> {
         try {
-            await this.confirmationAlert.waitFor({ state: 'visible', timeout: 2000 });
+            await this.confirmationAlert.waitFor({ state: 'visible', timeout: 3000 });
             const confirmationAlert = await this.confirmationAlert.textContent();
             return confirmationAlert?.includes('Success: You have added') || false;
         } catch {
@@ -70,6 +72,5 @@ export class ProductPage {
         await this.shoppingCartLink.click();
         return new CartPage(this.page);
     }
-
-
+    
 }

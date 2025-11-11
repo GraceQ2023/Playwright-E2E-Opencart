@@ -6,7 +6,9 @@ import { TestConfig } from '../test.config';
 import { HomePage } from '../pages/HomePage';
 
 
-// Read test data from CSV file
+// Data driven test - Login functionality
+
+// Load test data from CSV
 const csvPath = "testData/logindata.csv";
 let loginTestData: any[] = [];
 
@@ -16,9 +18,11 @@ try {
   console.error(`❌ Failed to load CSV data from ${csvPath}:`, error);
 }
 
-test.describe('Login Functionality - Data Driven', () => {
+
+test.describe('Login Functionality - Data Driven Test', () => {
 
     for (const data of loginTestData) {
+
         test(`Login Test: ${data.testName} @dataDriven`, async ({ page }) => {
 
             await page.goto(TestConfig.appUrl);
@@ -34,7 +38,7 @@ test.describe('Login Functionality - Data Driven', () => {
                 const isLoggedIn = await myAccountPage.isPageLoaded();
                 expect(isLoggedIn).toBeTruthy();
             } else {
-                const errorMsg: string = await loginPage.getLoginErrorMsg();
+                const errorMsg = await loginPage.getLoginErrorMsg();
                 expect(errorMsg).toContain('Warning: No match for E-Mail Address and/or Password.');
             } 
         });

@@ -6,19 +6,17 @@ import { LogoutPage } from '../pages/LogoutPage';
 import { MyAccountPage } from '../pages/MyAccountPage';
 
 test.describe('User Logout Functionality', () => {
+
     let homePage: HomePage;
     let loginPage: LoginPage;
     let myAccountPage: MyAccountPage;
     let logoutPage: LogoutPage;
-    let config: TestConfig;
+
 
     // Hook runs before each test in this describe block 
     test.beforeEach(async ({page}) => {
 
-        // initialize page objects
-        config = new TestConfig(); // load config file (url, credentials..))
-        await page.goto(TestConfig.appUrl); // navigate to base url 
-
+        await page.goto(TestConfig.appUrl); 
         homePage = new HomePage(page);
         loginPage = new LoginPage(page);
         myAccountPage = new MyAccountPage(page);
@@ -27,7 +25,8 @@ test.describe('User Logout Functionality', () => {
     });
 
 
-    test('User can successfully log out @master @regression', async () => {
+    test('Verify user can successfully log out @master @regression @sanity', async () => {
+        
         await homePage.goToLoginPage();
         await loginPage.login(TestConfig.validUser.email, TestConfig.validUser.password);
         expect.soft(await myAccountPage.isPageLoaded()).toBeTruthy();

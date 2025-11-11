@@ -2,15 +2,12 @@ import{Page, Locator} from '@playwright/test';
 import { ProductPage } from './ProductPage';
 
 export class SearchResultPage {
-    private readonly page: Page;
 
-    // define locators
+    private readonly page: Page;
     private readonly noResultsMsg: Locator;
 
     constructor(page: Page) {
         this.page = page;
-
-        // initialize locators
         this.noResultsMsg = page.getByText('There is no product that matches the search criteria.');
     }
 
@@ -26,6 +23,7 @@ export class SearchResultPage {
     /**
      * Check if a product exists in search results
      * @param productName 
+     * @returns {Promise<boolean>}
      */
     async hasProduct(productName: string): Promise<boolean> {
         const allProducts = await this.page.locator('h4 a').allInnerTexts();
@@ -39,6 +37,7 @@ export class SearchResultPage {
      * @returns {Promise<ProductPage | null>}
      */
     async selectProductIfExists(productName: string): Promise<ProductPage | null> {
+
         const product = this.page.locator('h4 a', { hasText: productName });
         if (await product.count() > 0) {
             await product.first().click();
@@ -46,6 +45,7 @@ export class SearchResultPage {
         }
         return null;
     }
+
 
     /**
      * Check if no results message is displayed
@@ -55,6 +55,7 @@ export class SearchResultPage {
         return await this.noResultsMsg.isVisible();
     }
 
+
     /**
      *  Get all product names in search results
      * @returns 
@@ -62,9 +63,6 @@ export class SearchResultPage {
     async getAllProductNames(): Promise<string[]> {
         const names = await this.page.locator('h4 a').allInnerTexts();
         return names.map(name => name.trim());
-}
-
-
-
+    }
 
 }

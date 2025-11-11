@@ -12,8 +12,6 @@ export class OrderConfirmationPage {
 
 
     async isPageLoaded(): Promise<boolean> {
-        // let title:string = await this.page.title();
-        // return title.toLowerCase().includes('your order has been placed');
         try {
             await this.page.waitForSelector('h1:has-text("Your order has been placed!")', { timeout: 5000 });
             const title = await this.page.title();

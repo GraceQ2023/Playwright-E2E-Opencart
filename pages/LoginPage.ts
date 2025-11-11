@@ -11,8 +11,6 @@ export class LoginPage {
 
     constructor(page: Page) {
         this.page = page;
-
-        // initialize locators
         this.emailInput = page.getByLabel('E-Mail Address');
         this.pwInput = page.getByLabel('Password');
         this.loginBtn = page.locator('input[type="submit"]');

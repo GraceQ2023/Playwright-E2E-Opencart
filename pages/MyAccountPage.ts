@@ -1,12 +1,12 @@
 import { Page, Locator, expect } from '@playwright/test';
-import { LogoutPage } from './LogoutPage'; // Import LogoutPage if needed
+import { LogoutPage } from './LogoutPage'; 
 import { MyAccInfoPage } from './MyAccInfoPage';
 import { HomePage } from './HomePage';
 
 export class MyAccountPage {
+
     private readonly page: Page;
     
-    // Locators using CSS selectors
     private readonly logoutLink: Locator;
     private readonly editAccountLink: Locator;
     private readonly confirmationMsg: Locator;
@@ -15,7 +15,6 @@ export class MyAccountPage {
     constructor(page: Page) {
         this.page = page;
         
-        // Initialize locators with CSS selectors
         this.logoutLink = page.locator('#column-right a:has-text("Logout")');
         this.editAccountLink = page.locator('#column-right a:has-text("Edit Account")');
         this.confirmationMsg = page.locator('.alert.alert-success.alert-dismissible');
@@ -23,7 +22,7 @@ export class MyAccountPage {
     }
 
     /**
-     * Verifies if My Account page is displayed
+     * Verifies if My Account page is loaded
      * @returns Promise<boolean> 
      */
     async isPageLoaded(): Promise<boolean> {
@@ -32,7 +31,7 @@ export class MyAccountPage {
     }
 
     /**
-     * Clicks on logout link
+     * Click on logout link
      * @returns Promise<LogoutPage> 
      */
     async clickLogout(): Promise<LogoutPage> {
@@ -51,14 +50,14 @@ export class MyAccountPage {
     }
 
 
-        /**
+    /**
      * Check if the confirmation message is displayed
      * @returns {Promise<boolean>}
      */
     async isConfirmationMsgDisplayed(): Promise<boolean> {
 
         try {
-            await this.confirmationMsg.waitFor({ state: 'visible', timeout: 3000 });
+            await this.confirmationMsg.waitFor({ state: 'visible', timeout: 4000 });
             return true;
         } catch {
             return false;
@@ -74,6 +73,7 @@ export class MyAccountPage {
         return (await this.confirmationMsg.textContent())?.trim() ?? '';
     }
 
+    
     /**
      * Navigate to homepage
      * @returns Promise<HomePage> - Returns HomePage instance
