@@ -5,10 +5,11 @@ import { CartPage } from './CartPage';
 import { CheckoutPage } from './CheckoutPage';
 import { LogoutPage } from './LogoutPage';
 import { SearchResultPage } from './SearchResultPage';
+import { BasePage } from './BasePage';
 
-export class HomePage {
+export class HomePage extends BasePage {
     
-    private readonly page: Page; // private keyword to restrict access to this variable, enforces encapsulation
+   // private readonly page: Page; // private keyword to restrict access to this variable, enforces encapsulation
 
     // define locators 
     private readonly myAccountDropdown: Locator;
@@ -23,7 +24,8 @@ export class HomePage {
     private readonly logoutLink: Locator;
 
     constructor(page: Page) {
-        this.page = page;
+        // this.page = page;
+        super(page); // call the constructor of the BasePage class
 
         // initialize locators
         this.myAccountDropdown = page.locator('span:has-text("My Account")')
@@ -45,11 +47,13 @@ export class HomePage {
      */
     async isPageLoaded(): Promise<boolean> {
 
-        let title = await this.page.title();
-        if(title.includes('Your Store')){
-            return true;
-        }
-        return false;
+        return this.waitForStablePage('your store');
+
+        // let title = await this.page.title();
+        // if(title.includes('Your Store')){
+        //     return true;
+        // }
+        // return false;
     }
 
     /**

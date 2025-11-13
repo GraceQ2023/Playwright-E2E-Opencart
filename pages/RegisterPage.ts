@@ -1,5 +1,6 @@
 
 import {Page, Locator} from '@playwright/test';
+import { BasePage } from './BasePage';
 
 interface registerData {
     fName: string, 
@@ -10,8 +11,8 @@ interface registerData {
     confirmPwd: string
 }
 
-export class RegisterPage {
-    private readonly page: Page;
+export class RegisterPage extends BasePage {
+    //private readonly page: Page;
 
     // define locators
     private readonly fNameInput: Locator;
@@ -27,7 +28,8 @@ export class RegisterPage {
     private readonly fieldErrorMsg: Locator;
 
     constructor(page: Page) {
-        this.page = page;
+        //this.page = page;
+        super(page);
 
         // initialize locators
         this.fNameInput = page.getByLabel('First Name');
@@ -49,8 +51,9 @@ export class RegisterPage {
      * @returns 
      */
     async isPageLoaded(): Promise<boolean> {
-        const title:string = await this.page.title();
-        return title.toLowerCase().includes('register account');
+        // const title:string = await this.page.title();
+        // return title.toLowerCase().includes('register account');
+        return this.waitForStablePage('register account');
     }
 
     /**

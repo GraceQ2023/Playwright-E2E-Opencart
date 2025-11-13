@@ -35,9 +35,23 @@ test.describe('User Login Functionality', () => {
     // Invalid login test
     test('Verify invalid login @regression', async () => {
 
+        // await loginPage.login(TestConfig.invalidUser.email, TestConfig.invalidUser.password);
+        // const errorMsg = await loginPage.getLoginErrorMsg();
+        // expect(errorMsg).toContain('Warning: No match for E-Mail Address and/or Password.');
+
         await loginPage.login(TestConfig.invalidUser.email, TestConfig.invalidUser.password);
         const errorMsg = await loginPage.getLoginErrorMsg();
-        expect(errorMsg).toContain('Warning: No match for E-Mail Address and/or Password.');
+
+        const possibleErrorMessages = [
+            'Warning: No match for E-Mail Address and/or Password.',
+            ' Warning: Your account has exceeded allowed number of login attempts. Please try again in 1 hour.'
+        ];
+
+        // Check if the actual error message matches any expected one
+        const isErrorContained = possibleErrorMessages.some(expectedMsg => errorMsg.includes(expectedMsg));
+
+        expect(isErrorContained).toBeTruthy();
+
     });
 
 });

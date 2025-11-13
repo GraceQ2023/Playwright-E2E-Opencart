@@ -1,11 +1,12 @@
-import { Page, Locator, expect } from '@playwright/test';
+import { Page, Locator} from '@playwright/test';
 import { LogoutPage } from './LogoutPage'; 
 import { MyAccInfoPage } from './MyAccInfoPage';
 import { HomePage } from './HomePage';
+import { BasePage } from './BasePage';
 
-export class MyAccountPage {
+export class MyAccountPage extends BasePage {
 
-    private readonly page: Page;
+    // private readonly page: Page;
     
     private readonly logoutLink: Locator;
     private readonly editAccountLink: Locator;
@@ -13,7 +14,8 @@ export class MyAccountPage {
     private readonly logoLink: Locator;
 
     constructor(page: Page) {
-        this.page = page;
+        // this.page = page;
+        super(page);
         
         this.logoutLink = page.locator('#column-right a:has-text("Logout")');
         this.editAccountLink = page.locator('#column-right a:has-text("Edit Account")');
@@ -26,8 +28,10 @@ export class MyAccountPage {
      * @returns Promise<boolean> 
      */
     async isPageLoaded(): Promise<boolean> {
-        let title:string = await this.page.title();
-        return title.toLowerCase().includes('my account');
+
+        // let title:string = await this.page.title();
+        // return title.toLowerCase().includes('my account');
+        return this.waitForStablePage('my account');
     }
 
     /**

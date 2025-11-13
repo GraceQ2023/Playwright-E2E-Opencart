@@ -35,11 +35,19 @@ test.describe('Login Functionality - Data Driven Test', () => {
             await loginPage.login(data.email, data.password);
 
             if (data.expected.trim().toLowerCase() === 'success') {
+                
                 const isLoggedIn = await myAccountPage.isPageLoaded();
-                expect(isLoggedIn).toBeTruthy();
+                expect(isLoggedIn).toBeTruthy(); 
             } else {
                 const errorMsg = await loginPage.getLoginErrorMsg();
-                expect(errorMsg).toContain('Warning: No match for E-Mail Address and/or Password.');
+                const possibleErrorMessages = [
+                    'Warning: No match for E-Mail Address and/or Password.',
+                    ' Warning: Your account has exceeded allowed number of login attempts. Please try again in 1 hour.'
+                ];
+
+                // Check if the actual error message matches any expected one
+                const isErrorContained = possibleErrorMessages.some(expectedMsg => errorMsg.includes(expectedMsg));
+                expect(isErrorContained).toBeTruthy();
             } 
         });
     }

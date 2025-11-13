@@ -1,5 +1,6 @@
 import { Page, Locator} from '@playwright/test';
 import { MyAccountPage } from './MyAccountPage';
+import { BasePage } from './BasePage';
 
 
 export interface AccountData {
@@ -10,9 +11,9 @@ export interface AccountData {
 }
 
 
-export class MyAccInfoPage {
+export class MyAccInfoPage extends BasePage {
 
-    private readonly page: Page;
+    // private readonly page: Page;
     
     private readonly fNameInput: Locator;
     private readonly lNameInput: Locator;
@@ -24,7 +25,8 @@ export class MyAccInfoPage {
 
 
     constructor(page: Page) {
-        this.page = page;
+        //this.page = page;
+        super(page);
         
         this.fNameInput = page.locator('#input-firstname');
         this.lNameInput = page.locator('#input-lastname');
@@ -40,8 +42,9 @@ export class MyAccInfoPage {
      * @returns 
      */
     async isPageLoaded(): Promise<boolean> {
-        let title:string = await this.page.title();
-        return title.toLowerCase().includes('my account information');
+        // let title:string = await this.page.title();
+        // return title.toLowerCase().includes('my account information');
+        return this.waitForStablePage('my account information');
     }
 
     /**

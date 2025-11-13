@@ -1,6 +1,7 @@
 import{Page, Locator} from '@playwright/test';
 import { HomePage } from './HomePage';
 import { CheckoutPage } from './CheckoutPage';
+import { BasePage } from './BasePage';
 
 
 export interface CartItem{
@@ -10,8 +11,8 @@ export interface CartItem{
 }
 
 
-export class CartPage {
-    private readonly page: Page;
+export class CartPage extends BasePage {
+    // private readonly page: Page;
 
     // define locators
     private readonly cartTableRows: Locator;
@@ -19,7 +20,8 @@ export class CartPage {
     private readonly checkoutBtn: Locator;
 
     constructor(page: Page) {
-        this.page = page;
+        //this.page = page;
+        super(page);
 
         // initialize locators
         this.cartTableRows = page.locator('#checkout-cart form table.table-bordered tbody tr'); // only rows in the cart table body, not including header row
@@ -33,8 +35,9 @@ export class CartPage {
      * @returns {Promise<boolean>}
      */
     async isPageLoaded(): Promise<boolean> {
-        let title:string = await this.page.title();
-        return title.toLowerCase().includes('shopping cart');
+        // let title:string = await this.page.title();
+        // return title.toLowerCase().includes('shopping cart');
+        return this.waitForStablePage('shopping cart');
     }
 
 

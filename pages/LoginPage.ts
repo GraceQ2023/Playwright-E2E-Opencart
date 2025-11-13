@@ -1,7 +1,9 @@
 import {Page, Locator} from '@playwright/test';
+import { MyAccountPage } from './MyAccountPage';
+import { BasePage } from './BasePage';
 
-export class LoginPage {
-    private readonly page: Page;
+export class LoginPage extends BasePage {
+    //private readonly page: Page;
 
     // define locators
     private readonly emailInput: Locator;
@@ -10,7 +12,8 @@ export class LoginPage {
     private readonly loginErrorMsg: Locator;
 
     constructor(page: Page) {
-        this.page = page;
+        //this.page = page;
+        super(page);
         this.emailInput = page.getByLabel('E-Mail Address');
         this.pwInput = page.getByLabel('Password');
         this.loginBtn = page.locator('input[type="submit"]');
@@ -22,11 +25,14 @@ export class LoginPage {
      * @returns 
      */
     async isPageLoaded(): Promise<boolean> {
-        let title:string = await this.page.title();
-        if(title.includes('Account Login')){
-            return true;
-        }
-        return false;
+
+        return this.waitForStablePage('account login');
+
+        // let title:string = await this.page.title();
+        // if(title.includes('Account Login')){
+        //     return true;
+        // }
+        // return false;
     }
 
     /**
@@ -34,10 +40,11 @@ export class LoginPage {
      * @param email 
      * @param password 
      */
-    async login(email: string, password: string): Promise<void> {
+    async login(email: string, password: string): Promise<MyAccountPage> {
         await this.emailInput.fill(email);
         await this.pwInput.fill(password);
         await this.loginBtn.click();
+        return new MyAccountPage(this.page);
     }
 
     /**

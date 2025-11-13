@@ -1,9 +1,11 @@
 import{Page, Locator} from '@playwright/test';
 import { CartPage } from './CartPage';
+import { BasePage } from './BasePage';
 
-export class ProductPage {
 
-    private readonly page: Page;
+export class ProductPage extends BasePage {
+
+    // private readonly page: Page;
 
     private readonly quantityInput: Locator;
     private readonly addToCartButton: Locator;
@@ -12,7 +14,9 @@ export class ProductPage {
 
     constructor(page: Page) {
 
-        this.page = page;
+        // this.page = page;
+        super(page);
+
         this.quantityInput = page.locator("#input-quantity");
         this.addToCartButton = page.locator('#button-cart');
         this.confirmationAlert = page.locator(".alert.alert-success.alert-dismissible");
@@ -24,8 +28,11 @@ export class ProductPage {
      * Verify if product page is loaded
      */
     async isPageLoaded(productName: string): Promise<boolean> {
-        let title:string = (await this.page.title()).toLowerCase();
-        return title.includes(productName.toLowerCase());
+
+        // let title:string = (await this.page.title()).toLowerCase();
+        // return title.includes(productName.toLowerCase());
+
+        return this.waitForStablePage(productName);
     }
 
     /**

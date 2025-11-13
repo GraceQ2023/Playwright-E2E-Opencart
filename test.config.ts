@@ -2,9 +2,11 @@
 export class TestConfig{
 
 // Application URL
-    // static readonly appUrl = 'http://localhost/opencart';
 
-    // loopback ip address for localhost, works for both local and CI environments
+    // for local testing 
+    //static readonly appUrl = 'http://localhost/opencart';
+
+    // for CI/Jenkins testing (build pipeline):
     static readonly appUrl ='http://127.0.0.1/opencart/'; 
 
 
@@ -17,9 +19,9 @@ export class TestConfig{
 
     // Valid user credentials - new user for edit account tests
     static readonly newUser = {
-        fName: 'test17',
-        lName: 'test17',
-        email: 'test17@gmail.com',
+        fName: 'test18',
+        lName: 'test18',
+        email: 'test18@gmail.com',
         tel: '123456',
         password: 'test'
     };

@@ -1,5 +1,6 @@
 import{Page, Locator} from '@playwright/test';
 import { OrderConfirmationPage } from './OrderConfirmationPage';
+import { BasePage } from './BasePage';
 
 /**
  * 
@@ -37,9 +38,9 @@ interface RegisteredCheckoutData {
     state: string;
 }
 
-export class CheckoutPage {
+export class CheckoutPage extends BasePage {
 
-    private readonly page: Page;
+    // private readonly page: Page;
     
     private readonly guestRadio: Locator;
     private readonly accContinueBtn: Locator;
@@ -68,7 +69,8 @@ export class CheckoutPage {
 
 
     constructor(page: Page) {
-        this.page = page;
+        //this.page = page;
+        super(page);
         
         // checkout option locators
         this.guestRadio = page.locator('input[value="guest"]');
@@ -108,8 +110,9 @@ export class CheckoutPage {
      * @returns {Promise<boolean>}
      */
     async isPageLoaded(): Promise<boolean> {
-        let title:string = await this.page.title();
-        return title.toLowerCase().includes('checkout');
+        // let title:string = await this.page.title();
+        // return title.toLowerCase().includes('checkout');
+        return this.waitForStablePage('checkout');
     }
 
 

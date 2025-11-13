@@ -1,13 +1,16 @@
 import{Page, Locator} from '@playwright/test';
 import { ProductPage } from './ProductPage';
+import { BasePage } from './BasePage';
 
-export class SearchResultPage {
+export class SearchResultPage extends BasePage {
 
-    private readonly page: Page;
+    // private readonly page: Page;
     private readonly noResultsMsg: Locator;
 
     constructor(page: Page) {
-        this.page = page;
+        // this.page = page;
+        super(page);
+
         this.noResultsMsg = page.getByText('There is no product that matches the search criteria.');
     }
 
@@ -16,8 +19,9 @@ export class SearchResultPage {
      * @returns {Promise<boolean>}
      */
     async isPageLoaded(): Promise<boolean> {
-        let title:string = await this.page.title();
-        return title.includes('Search -');
+        // let title:string = await this.page.title();
+        // return title.includes('Search -');
+        return this.waitForStablePage('search -');
     }
 
     /**

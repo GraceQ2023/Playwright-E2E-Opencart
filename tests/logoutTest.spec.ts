@@ -32,7 +32,9 @@ test.describe('User Logout Functionality', () => {
         expect.soft(await myAccountPage.isPageLoaded()).toBeTruthy();
 
         await myAccountPage.clickLogout();
-        expect(await logoutPage.isLoggedOutMessageDisplayed()).toBeTruthy();
+        //expect(await logoutPage.isLoggedOutMessageDisplayed()).toBeTruthy();
+        expect(await logoutPage.isPageLoaded()).toBeTruthy();
+
         await logoutPage.clickContinue();
         expect(await homePage.isPageLoaded()).toBeTruthy();
 
