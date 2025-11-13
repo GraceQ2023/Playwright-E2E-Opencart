@@ -18,6 +18,7 @@
 import { test, expect } from '@playwright/test';
 import { HomePage } from '../pages/HomePage';
 import { RegisterPage } from '../pages/RegisterPage';
+import { RegisterSuccessPage } from '../pages/RegisterSuccessPage';
 import { LoginPage } from '../pages/LoginPage';
 import { SearchResultPage } from '../pages/SearchResultPage';
 import { ProductPage } from '../pages/ProductPage';
@@ -39,6 +40,7 @@ test.describe('E2E Workflow 1: Register → Logout → Login → Search Product 
         // Declare page objects
         let homePage: HomePage;
         let registerPage: RegisterPage;
+        let registerSuccessPage: RegisterSuccessPage;
         let loginPage: LoginPage;
         let searchResultPage: SearchResultPage;
         let productPage: ProductPage;
@@ -88,11 +90,12 @@ test.describe('E2E Workflow 1: Register → Logout → Login → Search Product 
         await test.step('Register a new user', async () => {
 
             registerPage = new RegisterPage(page);
+            registerSuccessPage = new RegisterSuccessPage(page);
             await homePage.goToRegisterPage();
             await registerPage.fillRegistrationForm(registerData);
             await registerPage.agreeToPrivacyPolicy();
             await registerPage.submitRegistrationForm();
-            expect(await registerPage.isRegistrationSuccess(), 'Registration should be successful').toBeTruthy();
+            expect(await registerSuccessPage.isPageLoaded(), 'Registration should be successful').toBeTruthy();
         });
 
         console.log("✅ Registration is completed!");
@@ -100,8 +103,9 @@ test.describe('E2E Workflow 1: Register → Logout → Login → Search Product 
         // --- Step 3: Logout after registration ---
         await test.step('Logout after registration', async () => {
 
-            myAccountPage = new MyAccountPage(page);
+            myAccountPage = await registerSuccessPage.clickContinue();
             logoutPage = new LogoutPage(page);
+            
             await myAccountPage.clickLogout();
             // expect(await logoutPage.isLoggedOutMessageDisplayed(), 'Logout confirmation should be displayed').toBeTruthy();
             expect(await logoutPage.isPageLoaded()).toBeTruthy();

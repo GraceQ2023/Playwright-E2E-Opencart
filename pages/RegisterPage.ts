@@ -1,6 +1,7 @@
 
 import {Page, Locator} from '@playwright/test';
 import { BasePage } from './BasePage';
+import { RegisterSuccessPage } from './RegisterSuccessPage';
 
 interface registerData {
     fName: string, 
@@ -24,7 +25,7 @@ export class RegisterPage extends BasePage {
     private readonly privacyCheckbox: Locator;
     private readonly continueBtn: Locator;
     private readonly warningMsg: Locator;
-    private readonly confirmationMsg: Locator;
+    // private readonly confirmationMsg: Locator;
     private readonly fieldErrorMsg: Locator;
 
     constructor(page: Page) {
@@ -42,7 +43,7 @@ export class RegisterPage extends BasePage {
         this.continueBtn = page.locator("//input[@value='Continue']");
         this.warningMsg = page.locator(".alert.alert-danger.alert-dismissible");  // warning message for not accepting privacy policy
         this.fieldErrorMsg =  page.locator('.text-danger'); // field error messages
-        this.confirmationMsg = page.locator('h1:has-text("Your Account Has Been Created!")');
+        // this.confirmationMsg = page.locator('h1:has-text("Your Account Has Been Created!")');
     }
 
 
@@ -93,13 +94,13 @@ export class RegisterPage extends BasePage {
      * Check if registration is successful
      * @returns the confirmation message text.
      */
-    async isRegistrationSuccess(): Promise<boolean> {
-        return await this.confirmationMsg.isVisible();
-    }
+    // async isRegistrationSuccess(): Promise<boolean> {
+    //     return await this.confirmationMsg.isVisible();
+    // }
     
-    async getConfirmationMsg(): Promise<string> {
-        return (await this.confirmationMsg.textContent())?.trim() ?? '';   // return empty string if null
-    }
+    // async getConfirmationMsg(): Promise<string> {
+    //     return (await this.confirmationMsg.textContent())?.trim() ?? '';   // return empty string if null
+    // }
 
     /**
      * Get warning message for not accepting privacy policy

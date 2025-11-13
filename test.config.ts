@@ -4,7 +4,7 @@ export class TestConfig{
 // Application URL
 
     // for local testing 
-    //static readonly appUrl = 'http://localhost/opencart';
+    // static readonly appUrl = 'http://localhost/opencart';
 
     // for CI/Jenkins testing (build pipeline):
     static readonly appUrl ='http://127.0.0.1/opencart/'; 

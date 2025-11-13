@@ -4,17 +4,20 @@ import { TestConfig } from '../test.config';
 import { HomePage } from '../pages/HomePage';
 import { RegisterPage } from '../pages/RegisterPage';
 import { RandomDataUtil } from '../utils/randomDataGenerator';
+import { RegisterSuccessPage } from '../pages/RegisterSuccessPage';
 
 
 test.describe('User Registration Functionality', () => {
 
     let homePage: HomePage;
     let registerPage: RegisterPage;
+    let registerSuccessPage: RegisterSuccessPage;
 
     test.beforeEach(async ({page}) => {
-        
         homePage = new HomePage(page);
         registerPage = new RegisterPage(page);
+        registerSuccessPage = new RegisterSuccessPage(page);
+
         await page.goto(TestConfig.appUrl); 
         await homePage.goToRegisterPage();
     });
@@ -42,7 +45,8 @@ test.describe('User Registration Functionality', () => {
         await registerPage.submitRegistrationForm();
 
         // verify registration success
-        expect(await registerPage.isRegistrationSuccess()).toBeTruthy();
+        // expect(await registerPage.isRegistrationSuccess()).toBeTruthy();
+        expect(await registerSuccessPage.isPageLoaded()).toBeTruthy();
 
     });
 

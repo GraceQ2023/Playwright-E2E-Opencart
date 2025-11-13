@@ -1,6 +1,7 @@
 
 import { test, expect } from '@playwright/test';
 import { RegisterPage } from '../pages/RegisterPage';
+import { RegisterSuccessPage } from '../pages/RegisterSuccessPage';
 import { DataProvider } from '../utils/dataProvider';
 import { TestConfig } from '../test.config';
 import { HomePage } from '../pages/HomePage';
@@ -28,6 +29,7 @@ test.describe('User Registration Functionality - Data Driven Test', () => {
 
             const homePage = new HomePage(page);
             const registerPage = new RegisterPage(page);
+            const registerSuccessPage = new RegisterSuccessPage(page);
 
             await page.goto(TestConfig.appUrl);
             await homePage.goToRegisterPage();
@@ -63,7 +65,8 @@ test.describe('User Registration Functionality - Data Driven Test', () => {
 
             // Assert expected results
             if (data.expectedResult === 'success') {
-                expect(await registerPage.isRegistrationSuccess()).toBeTruthy();
+                // expect(await registerPage.isRegistrationSuccess()).toBeTruthy();
+                expect(await registerSuccessPage.isPageLoaded()).toBeTruthy();
             } else if (data.expectedResult === 'fieldError') {
                 expect(await registerPage.getFieldErrorMsg()).toContain(data.expectedMsg);
             } else if (data.expectedResult === 'warning') {
