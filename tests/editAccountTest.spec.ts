@@ -47,7 +47,7 @@ test.describe('Edit Account Functionality', () => {
 
 
     // Positive test - successfully update first name and last name
-    test('Verify user can successfully update account information @master @regression @sanity', async () => {
+    test('Verify user can successfully update account information @regression @sanity', async () => {
 
         await homePage.goToLoginPage();
         await loginPage.login(TestConfig.newUser.email, TestConfig.newUser.password);

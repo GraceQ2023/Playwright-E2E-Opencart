@@ -8,6 +8,7 @@
     "test:sanity": "playwright test --grep @sanity",
     "test:regression": "playwright test --grep @regression",
     "test:datadriven": "playwright test --grep @datadriven",
+    "test:e2e": "playwright test --grep @e2e",
     "test:master:headed": "playwright test --grep @master --headed",
     "test:sanity:debug": "playwright test --grep @sanity --debug"
   },
