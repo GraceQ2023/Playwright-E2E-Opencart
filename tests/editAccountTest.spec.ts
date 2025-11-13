@@ -1,3 +1,11 @@
+/**
+ * Edit Account Test Suite
+ * 
+ * Test case 1: Verify user cannot update email to an existing registered email
+ * Test case 2: Verify user can successfully update account information with correct data
+ */
+
+
 import {test, expect} from '@playwright/test';
 import { TestConfig } from '../test.config';
 import { HomePage } from '../pages/HomePage';
@@ -5,6 +13,7 @@ import { LoginPage } from '../pages/LoginPage';
 import { MyAccountPage } from '../pages/MyAccountPage';
 import { MyAccInfoPage } from '../pages/MyAccInfoPage';
 import { RandomDataUtil } from '../utils/randomDataGenerator';
+
 
 test.describe('Edit Account Functionality', () => {
 
@@ -14,7 +23,6 @@ test.describe('Edit Account Functionality', () => {
     let myAccInfoPage: MyAccInfoPage;
 
     test.beforeEach(async ({page}) => {
-
         await page.goto(TestConfig.appUrl); 
         homePage = new HomePage(page);
         loginPage = new LoginPage(page);
@@ -23,7 +31,9 @@ test.describe('Edit Account Functionality', () => {
     });
 
 
-    // Negative test - attempt to update email to an existing registered email
+    /**     
+     * Test Case 1: Verify user cannot update email to an existing registered email
+     */
     test('Verify user cannot update email to an existing registered email @regression', async () => {
 
         await homePage.goToLoginPage();
@@ -46,7 +56,9 @@ test.describe('Edit Account Functionality', () => {
     });
 
 
-    // Positive test - successfully update first name and last name
+    /**     
+     * Test Case 2: Verify user can successfully update account information with correct data
+     */
     test('Verify user can successfully update account information @regression @sanity', async () => {
 
         await homePage.goToLoginPage();
@@ -67,7 +79,6 @@ test.describe('Edit Account Functionality', () => {
         expect(await myAccountPage.isConfirmationMsgDisplayed()).toBeTruthy();
         expect(await myAccountPage.getConfirmationText()).toContain('Success: Your account has been successfully updated.');
 
-        // Verify the updated information is reflected correctly
         await myAccountPage.clickEditAccount();
         expect.soft(await myAccInfoPage.isPageLoaded()).toBeTruthy();
         const currentFirstName = (await myAccInfoPage.getAccInfo()).firstName;

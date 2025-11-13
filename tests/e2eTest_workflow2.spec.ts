@@ -2,7 +2,7 @@
  * Test Case: End-to-End Test workflow 2 with Database Verification
  * 
  * Purpose:
- * This test verifies the update of account information for an existing user, with database verification.
+ * This test performs an end-to-end verification of the account information update process for an existing user.
  * 
  * Steps:
  * 1) Login with existing account
@@ -31,7 +31,6 @@ test.describe('E2E Workflow 2: Update Account Info', { tag: ['@e2e', '@workflow2
 
     test('Verify update account information and database consistency', async ({ page }) => {
 
-        // Declare page objects 
         let homePage: HomePage;
         let myAccountPage: MyAccountPage;
         let myAccInfoPage: MyAccInfoPage;
@@ -145,7 +144,6 @@ test.describe('E2E Workflow 2: Update Account Info', { tag: ['@e2e', '@workflow2
 
             myAccountPage = await myAccInfoPage.clickContinue(); 
             logoutPage = await myAccountPage.clickLogout();
-            // expect(await logoutPage.isLoggedOutMessageDisplayed(), 'Logout confirmation should be displayed').toBeTruthy();
             expect(await logoutPage.isPageLoaded()).toBeTruthy();
             await logoutPage.clickContinue();
             expect(await homePage.isPageLoaded(), 'Home page should be loaded after logout').toBeTruthy();

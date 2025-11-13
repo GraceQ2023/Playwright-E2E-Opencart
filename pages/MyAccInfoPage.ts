@@ -13,8 +13,6 @@ export interface AccountData {
 
 export class MyAccInfoPage extends BasePage {
 
-    // private readonly page: Page;
-    
     private readonly fNameInput: Locator;
     private readonly lNameInput: Locator;
     private readonly emailInput: Locator;
@@ -25,7 +23,6 @@ export class MyAccInfoPage extends BasePage {
 
 
     constructor(page: Page) {
-        //this.page = page;
         super(page);
         
         this.fNameInput = page.locator('#input-firstname');
@@ -37,13 +34,12 @@ export class MyAccInfoPage extends BasePage {
         this.warningAlert = page.locator('div.alert.alert-danger.alert-dismissible');
     }
 
+
     /**
      * Check if My Account Information page is loaded
      * @returns 
      */
     async isPageLoaded(): Promise<boolean> {
-        // let title:string = await this.page.title();
-        // return title.toLowerCase().includes('my account information');
         return this.waitForStablePage('my account information');
     }
 
@@ -98,8 +94,6 @@ export class MyAccInfoPage extends BasePage {
      * @returns {Promise<AccountData>}
      */
     async getAccInfo(): Promise<AccountData> {
-
-        // using inputValue() to get the value of input field
         const firstName = await this.fNameInput.inputValue(); 
         const lastName = await this.lNameInput.inputValue();
         const email = await this.emailInput.inputValue();

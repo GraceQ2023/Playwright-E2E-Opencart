@@ -1,3 +1,8 @@
+/**
+ * @fileoverview Data driven test for login functionality using CSV data source.
+ * This test reads login credentials and expected outcomes from a CSV file
+ */
+
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage';
 import { MyAccountPage } from '../pages/MyAccountPage';
@@ -6,7 +11,7 @@ import { TestConfig } from '../test.config';
 import { HomePage } from '../pages/HomePage';
 
 
-// Data driven test - Login functionality
+// Data driven test for login functionality using CSV data source
 
 // Load test data from CSV
 const csvPath = "testData/logindata.csv";

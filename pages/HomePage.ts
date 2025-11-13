@@ -8,9 +8,6 @@ import { SearchResultPage } from './SearchResultPage';
 import { BasePage } from './BasePage';
 
 export class HomePage extends BasePage {
-    
-   // private readonly page: Page; // private keyword to restrict access to this variable, enforces encapsulation
-
     // define locators 
     private readonly myAccountDropdown: Locator;
     private readonly loginLink: Locator;
@@ -24,8 +21,7 @@ export class HomePage extends BasePage {
     private readonly logoutLink: Locator;
 
     constructor(page: Page) {
-        // this.page = page;
-        super(page); // call the constructor of the BasePage class
+        super(page); // call the constructor of BasePage class
 
         // initialize locators
         this.myAccountDropdown = page.locator('span:has-text("My Account")')
@@ -42,25 +38,17 @@ export class HomePage extends BasePage {
 
 
     /**
-     * Check if the homepage is loaded
+     * Check if homepage is loaded
      * @returns 
      */
     async isPageLoaded(): Promise<boolean> {
-
         return this.waitForStablePage('your store');
-
-        // let title = await this.page.title();
-        // if(title.includes('Your Store')){
-        //     return true;
-        // }
-        // return false;
     }
 
     /**
      * Navigate to Register page
      */
     async goToRegisterPage(): Promise<RegisterPage> {
-
         await this.myAccountDropdown.click();
         await this.registerLink.click();
         return new RegisterPage(this.page);
@@ -70,7 +58,6 @@ export class HomePage extends BasePage {
      * Navigate to Login page
      */
     async goToLoginPage(): Promise<LoginPage> {
-
         await this.myAccountDropdown.click();
         await this.loginLink.click();
         return new LoginPage(this.page);
@@ -81,7 +68,6 @@ export class HomePage extends BasePage {
      * @returns 
      */
     async goToLogoutPage(): Promise<LogoutPage> {
-
         await this.myAccountDropdown.click();
         await this.logoutLink.click();
         return new LogoutPage(this.page);
@@ -94,7 +80,6 @@ export class HomePage extends BasePage {
      * @returns {Promise<SearchResultPage>}
      */
     async searchProduct(productName: string): Promise<SearchResultPage> {
-
         await this.searchInput.fill(productName.trim());
         await this.searchButton.click();
         return new SearchResultPage(this.page);
@@ -107,9 +92,8 @@ export class HomePage extends BasePage {
      * @return product name added to cart
      */
     async addProductToCartFromHomePage(): Promise<string> {
-
         const productName = (await this.firstFeatureProduct.locator('h4 a').innerText()).trim();
-        await this.firstFeatureProduct.scrollIntoViewIfNeeded();  // ensure the element is in view
+        await this.firstFeatureProduct.scrollIntoViewIfNeeded();  // ensure element is in view
         await this.firstFeatureProduct.locator('button[onclick*="cart.add"]').click();
         return productName;
     }
@@ -132,20 +116,19 @@ export class HomePage extends BasePage {
 
     /**
      * Navigate to Shopping Cart page
-     * @returns Promise<CartPage> - Returns CartPage instance   
+     * @returns {Promise<CartPage>}   
      */
     async navigateToShoppingCart(): Promise<CartPage> {
-
         await this.shoppingCartLink.click();
         return new CartPage(this.page);
     }
 
+    
     /**
-     * Navigate to checkout page
-     * @returns Promise<CheckoutPage> - Returns CheckoutPage instance
+     * Navigate to Checkout page
+     * @returns {Promise<CheckoutPage>} 
      */
     async navigateToCheckout(): Promise<CheckoutPage> {
-  
         await this.checkoutLink.click();
         return new CheckoutPage(this.page);
     }

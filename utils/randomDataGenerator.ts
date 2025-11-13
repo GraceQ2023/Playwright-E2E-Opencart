@@ -1,3 +1,7 @@
+/**
+ * Random Data Generator Utility - provides methods to generate random user data for testing.
+ */
+
 import { faker } from '@faker-js/faker';
 
 export class RandomDataUtil{

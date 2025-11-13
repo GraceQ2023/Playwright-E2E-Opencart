@@ -1,3 +1,12 @@
+/**
+ * Registration Test Suite
+ * 
+ * Test case 1: Verify valid registration
+ * Test case 2: Verify invalid registration - password mismatch
+ * Test case 3: Verify invalid registration - email already registered
+ * Test case 4: Verify invalid registration - not checking privacy policy
+ */
+
 
 import {test, expect} from '@playwright/test';
 import { TestConfig } from '../test.config';
@@ -23,8 +32,10 @@ test.describe('User Registration Functionality', () => {
     });
 
 
-    // Valid registration test
-    test('Verify valid registration @master @sanity @regression', async () => {
+    /**
+     * Test Case 1: Verify valid registration
+     */
+    test('Verify valid registration @master @sanity', async () => {
 
         expect(await registerPage.isPageLoaded()).toBeTruthy();
 
@@ -44,14 +55,14 @@ test.describe('User Registration Functionality', () => {
         await registerPage.agreeToPrivacyPolicy();
         await registerPage.submitRegistrationForm();
 
-        // verify registration success
-        // expect(await registerPage.isRegistrationSuccess()).toBeTruthy();
         expect(await registerSuccessPage.isPageLoaded()).toBeTruthy();
 
     });
 
 
-    // Invalid registration test 1: password mismatch
+    /**
+     * Test Case 2: Verify invalid registration - password mismatch
+     */
     test('Verify invalid registration 1: password mismatch @regression', async () => {
 
         expect(await registerPage.isPageLoaded()).toBeTruthy();
@@ -70,13 +81,14 @@ test.describe('User Registration Functionality', () => {
         await registerPage.agreeToPrivacyPolicy();
         await registerPage.submitRegistrationForm();
 
-        // verify error message is shown 
         const errorMsg: string = await registerPage.getFieldErrorMsg();
         expect(errorMsg).toContain('Password confirmation does not match password!');
     });
 
 
-    // Invalid registration test 2: email already registered
+    /**
+     * Test Case 3: Verify invalid registration - email already registered
+     */
     test('Verify invalid registration 2: email already registered @regression', async () => {
 
         expect(await registerPage.isPageLoaded()).toBeTruthy();
@@ -96,14 +108,15 @@ test.describe('User Registration Functionality', () => {
         await registerPage.agreeToPrivacyPolicy();
         await registerPage.submitRegistrationForm();
 
-        // verify warning message is shown 
         const warningMsg: string = await registerPage.getWarningMsg();
         expect(warningMsg).toContain('Warning: E-Mail Address is already registered!');
 
     });
 
 
-    // Invalid registration test 3: not checking privacy policy
+    /**     
+     * Test Case 4: Verify invalid registration - not checking privacy policy
+     */
     test('Verify invalid registration 3: not checking privacy policy @regression', async () => {
 
         expect(await registerPage.isPageLoaded()).toBeTruthy();
@@ -121,8 +134,7 @@ test.describe('User Registration Functionality', () => {
         );
 
         await registerPage.submitRegistrationForm();
-
-        // verify warning message is shown 
+        
         const warningMsg: string = await registerPage.getWarningMsg();
         expect(warningMsg).toContain('Warning: You must agree to the Privacy Policy!');
     });

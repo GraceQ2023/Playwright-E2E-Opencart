@@ -1,3 +1,11 @@
+/**
+ * Search Product Test Suite
+ * 
+ * Test case 1: Verify search product when product exists
+ * Test case 2: Verify search product when product does not exist
+ */
+
+
 import {test, expect} from '@playwright/test';
 import { TestConfig } from '../test.config';
 import { HomePage } from '../pages/HomePage';
@@ -13,11 +21,13 @@ test.describe('Search Product Functionality', () => {
     test.beforeEach(async ({page}) => {
         homePage = new HomePage(page);
         searchResultPage = new SearchResultPage(page);
-        await page.goto(TestConfig.appUrl); // navigate to base url 
+        await page.goto(TestConfig.appUrl); 
     });
 
 
-    // Product search test - product exists
+   /**
+    * Test Case 1: Verify search product when product exists
+    */
     test('Verify search product when product exists @master @sanity @regression', async () => {
 
         const productName = TestConfig.product.name;
@@ -27,7 +37,9 @@ test.describe('Search Product Functionality', () => {
     });
     
     
-    // Product search test - product does not exist
+    /**
+     * Test Case 2: Verify search product when product does not exist
+     */
     test('Verify search product when product does not exist @regression', async () => {
 
         const productName = RandomDataUtil.generateDrink();

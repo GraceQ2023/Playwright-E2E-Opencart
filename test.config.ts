@@ -1,13 +1,9 @@
 
 export class TestConfig{
 
-// Application URL
-
-    // for local testing 
-    // static readonly appUrl = 'http://localhost/opencart';
-
-    // for CI/Jenkins testing (build pipeline):
-    static readonly appUrl ='http://127.0.0.1/opencart/'; 
+    // Application URL
+    // static readonly appUrl = 'http://localhost/opencart';  // for local testing 
+    static readonly appUrl ='http://127.0.0.1/opencart/';     // for CI/Jenkins testing (build pipeline)
 
 
     // Valid user credentials 
@@ -43,7 +39,6 @@ export class TestConfig{
 
 
     // DB configs
-    // static readonly apiEndpoint = 'http://localhost/opencart/api';
     static readonly dbConfig = {
         dbHost: 'localhost',
         dbUser: 'root',

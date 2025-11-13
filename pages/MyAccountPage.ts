@@ -5,16 +5,13 @@ import { HomePage } from './HomePage';
 import { BasePage } from './BasePage';
 
 export class MyAccountPage extends BasePage {
-
-    // private readonly page: Page;
-    
+    // define locators     
     private readonly logoutLink: Locator;
     private readonly editAccountLink: Locator;
     private readonly confirmationMsg: Locator;
     private readonly logoLink: Locator;
 
     constructor(page: Page) {
-        // this.page = page;
         super(page);
         
         this.logoutLink = page.locator('#column-right a:has-text("Logout")');
@@ -28,15 +25,12 @@ export class MyAccountPage extends BasePage {
      * @returns Promise<boolean> 
      */
     async isPageLoaded(): Promise<boolean> {
-
-        // let title:string = await this.page.title();
-        // return title.toLowerCase().includes('my account');
         return this.waitForStablePage('my account');
     }
 
     /**
      * Click on logout link
-     * @returns Promise<LogoutPage> 
+     * @returns {Promise<LogoutPage>} 
      */
     async clickLogout(): Promise<LogoutPage> {
             await this.logoutLink.click();
@@ -46,7 +40,7 @@ export class MyAccountPage extends BasePage {
 
     /**
      * Clicks on Edit Account link to navigate to My Account Information page
-     * @returns Promise<MyAccInfoPage>
+     * @returns {Promise<MyAccInfoPage>}
      */
     async clickEditAccount(): Promise<MyAccInfoPage> {
         await this.editAccountLink.click();
@@ -55,11 +49,10 @@ export class MyAccountPage extends BasePage {
 
 
     /**
-     * Check if the confirmation message is displayed
+     * Check if confirmation message is displayed
      * @returns {Promise<boolean>}
      */
     async isConfirmationMsgDisplayed(): Promise<boolean> {
-
         try {
             await this.confirmationMsg.waitFor({ state: 'visible', timeout: 4000 });
             return true;
@@ -80,7 +73,7 @@ export class MyAccountPage extends BasePage {
     
     /**
      * Navigate to homepage
-     * @returns Promise<HomePage> - Returns HomePage instance
+     * @returns {Promise<HomePage>}
      */
     async navigateToHomePage(): Promise<HomePage> {
         await this.logoLink.click();

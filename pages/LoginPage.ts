@@ -2,9 +2,8 @@ import {Page, Locator} from '@playwright/test';
 import { MyAccountPage } from './MyAccountPage';
 import { BasePage } from './BasePage';
 
-export class LoginPage extends BasePage {
-    //private readonly page: Page;
 
+export class LoginPage extends BasePage {
     // define locators
     private readonly emailInput: Locator;
     private readonly pwInput: Locator;
@@ -12,7 +11,6 @@ export class LoginPage extends BasePage {
     private readonly loginErrorMsg: Locator;
 
     constructor(page: Page) {
-        //this.page = page;
         super(page);
         this.emailInput = page.getByLabel('E-Mail Address');
         this.pwInput = page.getByLabel('Password');
@@ -20,25 +18,21 @@ export class LoginPage extends BasePage {
         this.loginErrorMsg = page.locator('div.alert.alert-danger.alert-dismissible')
     }
 
+
     /**
      * Check if login page is loaded
      * @returns 
      */
     async isPageLoaded(): Promise<boolean> {
-
         return this.waitForStablePage('account login');
-
-        // let title:string = await this.page.title();
-        // if(title.includes('Account Login')){
-        //     return true;
-        // }
-        // return false;
     }
+
 
     /**
      * Perform login action
-     * @param email 
+     * @param email
      * @param password 
+     * @returns {MyAccountPage}
      */
     async login(email: string, password: string): Promise<MyAccountPage> {
         await this.emailInput.fill(email);
@@ -46,6 +40,7 @@ export class LoginPage extends BasePage {
         await this.loginBtn.click();
         return new MyAccountPage(this.page);
     }
+
 
     /**
      * Get login error message text

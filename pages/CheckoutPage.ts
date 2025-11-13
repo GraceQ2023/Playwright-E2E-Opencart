@@ -1,10 +1,6 @@
-import{Page, Locator} from '@playwright/test';
-import { OrderConfirmationPage } from './OrderConfirmationPage';
-import { BasePage } from './BasePage';
-
 /**
  * 
- * The checkout methods cover various checkout scenarios:
+ * The checkout methods cover below checkout scenarios:
  *  - Guest checkout
  *  - Registered user first checkout
  *  - Returning customer checkout
@@ -15,6 +11,10 @@ import { BasePage } from './BasePage';
  * 
  */
 
+
+import{Page, Locator} from '@playwright/test';
+import { OrderConfirmationPage } from './OrderConfirmationPage';
+import { BasePage } from './BasePage';
 
 interface GuestCheckoutData {
     firstName: string;
@@ -40,8 +40,7 @@ interface RegisteredCheckoutData {
 
 export class CheckoutPage extends BasePage {
 
-    // private readonly page: Page;
-    
+    // define locators
     private readonly guestRadio: Locator;
     private readonly accContinueBtn: Locator;
     private readonly returningCustomerEmailInput: Locator;
@@ -69,7 +68,6 @@ export class CheckoutPage extends BasePage {
 
 
     constructor(page: Page) {
-        //this.page = page;
         super(page);
         
         // checkout option locators
@@ -106,17 +104,15 @@ export class CheckoutPage extends BasePage {
     }
 
     /**
-     * check if checkout page is loaded
+     * Check if checkout page is loaded
      * @returns {Promise<boolean>}
      */
     async isPageLoaded(): Promise<boolean> {
-        // let title:string = await this.page.title();
-        // return title.toLowerCase().includes('checkout');
         return this.waitForStablePage('checkout');
     }
 
 
-    // --- Helper wait ---
+    // --- Helper wait for form expand ---
     async waitForSectionToExpand(sectionId: string) {
         await this.page.waitForSelector(`#${sectionId}.collapse.in, #${sectionId}.collapse.show`, {
             state: 'visible', timeout: 5000,
@@ -124,7 +120,10 @@ export class CheckoutPage extends BasePage {
     }
 
 
-    // Choose checkout option - Guest checkout
+    /**
+     * Choose checkout option - Guest checkout
+     * @param checkOutOption 
+     */
     async chooseCheckoutOption(checkOutOption: string){
         if (checkOutOption.toLowerCase() === "guest checkout") {
             await this.guestRadio.click();
@@ -133,7 +132,12 @@ export class CheckoutPage extends BasePage {
         }
     }
 
-    // Choose checkout option -  Returning customer
+
+    /**
+     * Choose checkout option -  Returning customer
+     * @param email 
+     * @param password 
+     */
     async loginAsReturningCustomer(email: string, password: string): Promise<void> {
         await this.returningCustomerEmailInput.fill(email);
         await this.returningCustomerPwdInput.fill(password);
@@ -142,7 +146,10 @@ export class CheckoutPage extends BasePage {
     }
 
 
-    // Fill in checkout form for registered user for placing first order
+    /**
+     * Fill in checkout form for registered user for placing first order
+     * @param data 
+     */
     async fillCheckoutForm_RegisteredUserFirstOrder(data: RegisteredCheckoutData): Promise<void>  {
 
         await this.billingFirstNameInput.fill(data.firstName);
@@ -162,7 +169,10 @@ export class CheckoutPage extends BasePage {
     }
 
 
-    // Fill in checkout form - guest checkout
+    /**
+     * Fill in checkout form - guest checkout
+     * @param guestData 
+     */
     async fillCheckoutForm_GuestCheckout(guestData: GuestCheckoutData): Promise<void> {
         await this.billingFirstNameInput.fill(guestData.firstName);
         await this.billingLastNameInput.fill(guestData.lastName);
@@ -183,7 +193,9 @@ export class CheckoutPage extends BasePage {
     }
 
 
-    // Fill in checkout form - returning user
+    /**
+     * Fill in checkout form - returning customer
+     */
     async fillCheckoutForm_ReturningCustomer(): Promise<void> {
 
         await this.page.waitForSelector('#collapse-payment-address', { state: 'visible', timeout: 6000 });
@@ -198,7 +210,8 @@ export class CheckoutPage extends BasePage {
         
 
     /**
-     * Click confirm order button
+     * Click confirm order button to place the order
+     * @returns {Promise<OrderConfirmationPage>}
      */
     async clickConfirmOrder() : Promise<OrderConfirmationPage> {
         await this.confirmOrderBtn.click();

@@ -4,13 +4,10 @@ import { BasePage } from './BasePage';
 
 export class SearchResultPage extends BasePage {
 
-    // private readonly page: Page;
     private readonly noResultsMsg: Locator;
 
     constructor(page: Page) {
-        // this.page = page;
         super(page);
-
         this.noResultsMsg = page.getByText('There is no product that matches the search criteria.');
     }
 
@@ -23,6 +20,7 @@ export class SearchResultPage extends BasePage {
         // return title.includes('Search -');
         return this.waitForStablePage('search -');
     }
+
 
     /**
      * Check if a product exists in search results
@@ -62,7 +60,7 @@ export class SearchResultPage extends BasePage {
 
     /**
      *  Get all product names in search results
-     * @returns 
+     * @returns {Promise<string[]>}
      */
     async getAllProductNames(): Promise<string[]> {
         const names = await this.page.locator('h4 a').allInnerTexts();

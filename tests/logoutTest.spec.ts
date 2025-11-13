@@ -1,9 +1,17 @@
+/**
+ * Logout Test Suite
+ * 
+ * Test case 1: Verify user can successfully log out
+ */
+
+
 import {test, expect} from '@playwright/test';
 import { TestConfig } from '../test.config';
 import { HomePage } from '../pages/HomePage';
 import { LoginPage } from '../pages/LoginPage';
 import { LogoutPage } from '../pages/LogoutPage';
 import { MyAccountPage } from '../pages/MyAccountPage';
+
 
 test.describe('User Logout Functionality', () => {
 
@@ -12,10 +20,7 @@ test.describe('User Logout Functionality', () => {
     let myAccountPage: MyAccountPage;
     let logoutPage: LogoutPage;
 
-
-    // Hook runs before each test in this describe block 
     test.beforeEach(async ({page}) => {
-
         await page.goto(TestConfig.appUrl); 
         homePage = new HomePage(page);
         loginPage = new LoginPage(page);
@@ -24,7 +29,10 @@ test.describe('User Logout Functionality', () => {
 
     });
 
-
+    
+    /**     
+     * Test Case 1: Verify user can successfully log out
+     */
     test('Verify user can successfully log out @master @regression @sanity', async () => {
         
         await homePage.goToLoginPage();
@@ -32,7 +40,6 @@ test.describe('User Logout Functionality', () => {
         expect.soft(await myAccountPage.isPageLoaded()).toBeTruthy();
 
         await myAccountPage.clickLogout();
-        //expect(await logoutPage.isLoggedOutMessageDisplayed()).toBeTruthy();
         expect(await logoutPage.isPageLoaded()).toBeTruthy();
 
         await logoutPage.clickContinue();

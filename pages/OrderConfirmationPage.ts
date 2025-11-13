@@ -5,12 +5,10 @@ import { BasePage } from './BasePage';
 
 export class OrderConfirmationPage extends BasePage {
 
-    // private readonly page: Page;
     private readonly continueBtn: Locator;
     private readonly confirmationMessageTitle: Locator;
 
     constructor(page: Page) {
-        // this.page = page;
         super(page);
 
         this.continueBtn = page.locator('a:has-text("Continue")');
@@ -18,10 +16,12 @@ export class OrderConfirmationPage extends BasePage {
   }
 
 
+  /**
+   * Checks if Order Confirmation page is loaded
+   * @returns {Promise<boolean>}
+   */
     async isPageLoaded(): Promise<boolean> {      
-
-        // additional wait to deal with potential timing issues
-        // navigation wait (from basepage) + explicit wait for confirmation message
+        // additional wait to deal with potential timing issues: navigation wait (from basepage) + explicit wait for confirmation message
         try{
              await this.waitForStablePage('your order has been placed!');
              await this.confirmationMessageTitle.waitFor({ state: 'visible', timeout: 10000});
@@ -31,7 +31,10 @@ export class OrderConfirmationPage extends BasePage {
         }
     }
 
-
+    /**
+     * Clicks the Continue button to navigate back to Home Page
+     * @returns {Promise<HomePage>}
+     */
 
     async clickContinue(): Promise<HomePage> {
         await this.continueBtn.click();

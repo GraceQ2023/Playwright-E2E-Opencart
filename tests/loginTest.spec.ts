@@ -1,3 +1,10 @@
+/**
+ * Login Test Suite
+ * 
+ * Test case 1: Verify valid login
+ * Test case 2: Verify invalid login
+ */
+
 
 import {test, expect} from '@playwright/test';
 import { TestConfig } from '../test.config';
@@ -7,6 +14,7 @@ import { MyAccountPage } from '../pages/MyAccountPage';
 
 
 test.describe('User Login Functionality', () => {
+
     let homePage: HomePage;
     let loginPage: LoginPage;
     let myAccountPage: MyAccountPage;
@@ -22,7 +30,9 @@ test.describe('User Login Functionality', () => {
     });
 
 
-    // Valid login test
+    /**
+     * Test Case 1: Verify valid login
+     */
     test('Verify valid login @master @sanity @regression', async () => {
 
         await loginPage.login(TestConfig.validUser.email, TestConfig.validUser.password);
@@ -32,12 +42,10 @@ test.describe('User Login Functionality', () => {
     });
 
 
-    // Invalid login test
+    /**
+     * Test Case 2: Verify invalid login
+     */
     test('Verify invalid login @regression', async () => {
-
-        // await loginPage.login(TestConfig.invalidUser.email, TestConfig.invalidUser.password);
-        // const errorMsg = await loginPage.getLoginErrorMsg();
-        // expect(errorMsg).toContain('Warning: No match for E-Mail Address and/or Password.');
 
         await loginPage.login(TestConfig.invalidUser.email, TestConfig.invalidUser.password);
         const errorMsg = await loginPage.getLoginErrorMsg();
@@ -49,9 +57,7 @@ test.describe('User Login Functionality', () => {
 
         // Check if the actual error message matches any expected one
         const isErrorContained = possibleErrorMessages.some(expectedMsg => errorMsg.includes(expectedMsg));
-
         expect(isErrorContained).toBeTruthy();
-
     });
 
 });

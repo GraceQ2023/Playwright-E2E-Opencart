@@ -1,9 +1,17 @@
+/**
+ * DB Utility - provides methods to interact with the database for test verification.
+ */
+
 import mysql from 'mysql2/promise';
 import { TestConfig } from '../test.config';
 
-export class DBUtil {
 
-    // establish and return a database connection
+export class DBUtil {
+    
+    /**
+     * Establishes and returns a MySQL database connection
+     * @returns Promise<mysql.Connection>
+     */
     private static async getConnection(){
         return mysql.createConnection({
             host: TestConfig.dbConfig.dbHost,
@@ -13,7 +21,9 @@ export class DBUtil {
         });
     }
 
-    // simple query runner 
+    /**
+     * simple query runner for general queries
+     */
     static async runQuery(query: string, params: any[] = []): Promise<any[]> {
         const connection = await this.getConnection();
         const [rows] = await connection.execute(query, params);
@@ -21,8 +31,11 @@ export class DBUtil {
         return rows as any[];
     }
 
-    
-    // Query: Get customer record by email
+    /**
+     * Query: Get customer record by email
+     * @param email 
+     * @returns Promise<any[]>
+     */
     static async getCustomerByEmail(email: string): Promise<any[]> {
 
         const connection = await this.getConnection();

@@ -1,3 +1,12 @@
+/**
+ * Add to Cart Test Suite
+ * 
+ * Test case 1: Verify add product to cart from product page 
+ * Test case 2: Verify add product to cart from homepage section
+ * 
+ */
+
+
 import {test, expect} from '@playwright/test';
 import { TestConfig } from '../test.config';
 import { HomePage } from '../pages/HomePage';
@@ -14,8 +23,6 @@ test.describe('Add to Cart Functionality', () => {
     let cartPage: CartPage;
 
     test.beforeEach(async ({page}) => {
-
-        // initialize page objects
         homePage = new HomePage(page);
         searchResultPage = new SearchResultPage(page);
         productPage = new ProductPage(page);
@@ -45,7 +52,7 @@ test.describe('Add to Cart Functionality', () => {
         );
 
         expect(target).toBeTruthy(); // check product is found
-        expect(target?.quantity).toBe(Number(productQty)); // verify quantity
+        expect(target?.quantity).toBe(Number(productQty)); // verify quantity equals to added quantity
     });
 
 

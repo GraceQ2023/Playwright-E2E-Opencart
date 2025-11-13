@@ -4,7 +4,6 @@ import { MyAccountPage } from './MyAccountPage';
 
 
 export class RegisterSuccessPage extends BasePage {
-
     private readonly continueBtn: Locator;
 
     constructor(page: Page) {
@@ -19,12 +18,14 @@ export class RegisterSuccessPage extends BasePage {
      * @returns 
      */
     async isPageLoaded(): Promise<boolean> {
-        // const title:string = await this.page.title();
-        // return title.toLowerCase().includes('register account');
         return this.waitForStablePage('your account has been created!');
     }
 
-
+    
+    /**
+     * Click the continue button to redirect to My Account page
+     * @returns {MyAccountPage}
+     */
     async clickContinue(): Promise<MyAccountPage> {
         await this.continueBtn.click();
         return new MyAccountPage(this.page);

@@ -2,7 +2,7 @@
  * Test Case: End-to-End Test workflow 1 with Database Verification
  *
  * Purpose:
- * This test simulates a complete user flow on an e-commerce site, with database verification.
+ * This test performs an end-to-end verification of the user registration, login, product search, add to cart, checkout, and logout process,
  * 
  * Steps:
  * 1) Register a new account
@@ -99,13 +99,14 @@ test.describe('E2E Workflow 1: Register → Logout → Login → Search Product 
         });
 
         console.log("✅ Registration is completed!");
+        
 
         // --- Step 3: Logout after registration ---
         await test.step('Logout after registration', async () => {
 
             myAccountPage = await registerSuccessPage.clickContinue();
             logoutPage = new LogoutPage(page);
-            
+
             await myAccountPage.clickLogout();
             // expect(await logoutPage.isLoggedOutMessageDisplayed(), 'Logout confirmation should be displayed').toBeTruthy();
             expect(await logoutPage.isPageLoaded()).toBeTruthy();

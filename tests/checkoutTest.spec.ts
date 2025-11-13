@@ -1,3 +1,14 @@
+/**
+ * Checkout Test Suite
+ * 
+ * Test case 1: Verify guest checkout process
+ * Test case 2: Verify registered user first checkout process
+ * Test case 3: Verify returning customer checkout process 
+ * 
+ * NOTE: due to the demo site's limitations, the checkout process is not fully functional, and not stable for automation.
+ * Therefore, tests are marked as skipped until the site supports complete checkout functionality.
+ */
+
 
 import { test, expect } from '@playwright/test';
 import { CheckoutPage } from '../pages/CheckoutPage';
@@ -8,19 +19,8 @@ import { TestConfig } from '../test.config';
 import { MyAccountPage } from '../pages/MyAccountPage';
 import { OrderConfirmationPage } from '../pages/OrderConfirmationPage';
 
-/**
- *  The checkout tests cover various checkout scenarios:
- *  - Guest checkout
- *  - Registered user first checkout
- *  - Returning customer checkout
- * 
- * However, due to the demo site's limitations, the checkout process is not fully functional, and not stable for automation.
- * Therefore, tests are marked as skipped until the site supports complete checkout functionality.
- */
-
 
 test.describe('Checkout Functionality', () => {
-
     let homePage: HomePage;
     let loginPage: LoginPage;
     let checkoutPage: CheckoutPage;
@@ -36,7 +36,9 @@ test.describe('Checkout Functionality', () => {
     });
 
 
-
+    /**
+     * Test Case 1: Verify guest checkout process
+     */
     test.skip ('Verify guest checkout process @wip', async () => {
     
         await homePage.addProductToCartFromHomePage();
@@ -64,7 +66,9 @@ test.describe('Checkout Functionality', () => {
     });
 
 
-
+    /**
+     * Test Case 2: Verify registered user first checkout process
+     */
     test.skip ('Verify registered user first checkout process @wip', async () => {
 
         await homePage.goToLoginPage();
@@ -94,6 +98,9 @@ test.describe('Checkout Functionality', () => {
     });
 
 
+    /**
+     * Test Case 3: Verify returning customer checkout process
+     */
     test.skip ('Verify returning customer checkout process (up to warning shown) @wip', async () => {
 
         await homePage.addProductToCartFromHomePage();

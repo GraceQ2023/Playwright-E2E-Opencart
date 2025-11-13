@@ -12,41 +12,38 @@ export interface CartItem{
 
 
 export class CartPage extends BasePage {
-    // private readonly page: Page;
-
     // define locators
     private readonly cartTableRows: Locator;
     private readonly continueShoppingBtn: Locator;
     private readonly checkoutBtn: Locator;
 
     constructor(page: Page) {
-        //this.page = page;
         super(page);
 
         // initialize locators
         this.cartTableRows = page.locator('#checkout-cart form table.table-bordered tbody tr'); // only rows in the cart table body, not including header row
         this.continueShoppingBtn = page.getByRole('link', { name: 'Continue Shopping' });
-        // this.checkoutBtn = page.getByRole('link', { name: 'Checkout' });
         this.checkoutBtn = page.locator("//a[@class='btn btn-primary']")
     }
+
 
     /**
      * check if shopping cart page is loaded
      * @returns {Promise<boolean>}
      */
     async isPageLoaded(): Promise<boolean> {
-        // let title:string = await this.page.title();
-        // return title.toLowerCase().includes('shopping cart');
         return this.waitForStablePage('shopping cart');
     }
 
-
+    /**
+     * Get all items in the cart and store them in an array
+     * @returns {Promise<CartItem[]>}
+     */
     async getCartItems(): Promise<CartItem[]> {
 
         const items: CartItem[] = [];  // array to hold cart items
 
         await this.page.waitForSelector('table.table-bordered tbody tr td.text-left a', { state: 'visible', timeout: 20000 }); // wait for product links in cart to be visible
-
         const rows = this.cartTableRows;  // get all rows in the cart table body
         const count = await rows.count();
 
@@ -79,6 +76,7 @@ export class CartPage extends BasePage {
 
     /**
      * Click on continue shopping button to go back to home page
+     * @returns {Promise<HomePage>}
      */
     async clickContinueShopping(): Promise<HomePage> {
         await this.continueShoppingBtn.click();
@@ -87,7 +85,8 @@ export class CartPage extends BasePage {
 
 
     /**
-     * Click on the checkout button to proceed to checkout
+     * Click on the checkout button to proceed to checkout page
+     * @returns {Promise<CheckoutPage>}
      */
     async clickCheckoutBtn(): Promise<CheckoutPage> {
         await this.checkoutBtn.click();

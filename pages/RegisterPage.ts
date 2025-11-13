@@ -1,7 +1,6 @@
 
 import {Page, Locator} from '@playwright/test';
 import { BasePage } from './BasePage';
-import { RegisterSuccessPage } from './RegisterSuccessPage';
 
 interface registerData {
     fName: string, 
@@ -13,8 +12,6 @@ interface registerData {
 }
 
 export class RegisterPage extends BasePage {
-    //private readonly page: Page;
-
     // define locators
     private readonly fNameInput: Locator;
     private readonly lNameInput: Locator;
@@ -25,12 +22,10 @@ export class RegisterPage extends BasePage {
     private readonly privacyCheckbox: Locator;
     private readonly continueBtn: Locator;
     private readonly warningMsg: Locator;
-    // private readonly confirmationMsg: Locator;
     private readonly fieldErrorMsg: Locator;
 
     constructor(page: Page) {
-        //this.page = page;
-        super(page);
+        super(page); 
 
         // initialize locators
         this.fNameInput = page.getByLabel('First Name');
@@ -43,7 +38,6 @@ export class RegisterPage extends BasePage {
         this.continueBtn = page.locator("//input[@value='Continue']");
         this.warningMsg = page.locator(".alert.alert-danger.alert-dismissible");  // warning message for not accepting privacy policy
         this.fieldErrorMsg =  page.locator('.text-danger'); // field error messages
-        // this.confirmationMsg = page.locator('h1:has-text("Your Account Has Been Created!")');
     }
 
 
@@ -52,17 +46,15 @@ export class RegisterPage extends BasePage {
      * @returns 
      */
     async isPageLoaded(): Promise<boolean> {
-        // const title:string = await this.page.title();
-        // return title.toLowerCase().includes('register account');
         return this.waitForStablePage('register account');
     }
+
 
     /**
      * Fill registration form
      * @param data
      */
     async fillRegistrationForm(data: registerData): Promise<void> {
-    
         await this.fNameInput.fill(data.fName);
         await this.lNameInput.fill(data.lName);
         await this.emailInput.fill(data.email);
@@ -73,7 +65,7 @@ export class RegisterPage extends BasePage {
 
     
     /**
-     * agree to privacy policy
+     * Agree to privacy policy
      */
     async agreeToPrivacyPolicy(): Promise<void> {
         await this.privacyCheckbox.check();
@@ -90,21 +82,10 @@ export class RegisterPage extends BasePage {
         ]);
     }
 
-    /**
-     * Check if registration is successful
-     * @returns the confirmation message text.
-     */
-    // async isRegistrationSuccess(): Promise<boolean> {
-    //     return await this.confirmationMsg.isVisible();
-    // }
-    
-    // async getConfirmationMsg(): Promise<string> {
-    //     return (await this.confirmationMsg.textContent())?.trim() ?? '';   // return empty string if null
-    // }
 
     /**
      * Get warning message for not accepting privacy policy
-     * @returns the warning message text.
+     * @returns the warning message text
      */
     async getWarningMsg(): Promise<string> {
         if (await this.warningMsg.isVisible()) {
@@ -113,9 +94,10 @@ export class RegisterPage extends BasePage {
         return '';
     }
 
+
     /**
-     * Get the current visible field error message.
-     * NOTE: Assumes only one field error is visible in the current test context.
+     * Get the current visible field error message
+     * NOTE: Assumes only one field error is visible in the current test context
      * @returns the error message text.
      */
     async getFieldErrorMsg(): Promise<string> {

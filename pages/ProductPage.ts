@@ -4,19 +4,15 @@ import { BasePage } from './BasePage';
 
 
 export class ProductPage extends BasePage {
-
-    // private readonly page: Page;
-
+    // define locators
     private readonly quantityInput: Locator;
     private readonly addToCartButton: Locator;
     private readonly confirmationAlert: Locator;
     private readonly shoppingCartLink: Locator; 
 
     constructor(page: Page) {
-
-        // this.page = page;
         super(page);
-
+        // initialize locators
         this.quantityInput = page.locator("#input-quantity");
         this.addToCartButton = page.locator('#button-cart');
         this.confirmationAlert = page.locator(".alert.alert-success.alert-dismissible");
@@ -28,12 +24,9 @@ export class ProductPage extends BasePage {
      * Verify if product page is loaded
      */
     async isPageLoaded(productName: string): Promise<boolean> {
-
-        // let title:string = (await this.page.title()).toLowerCase();
-        // return title.includes(productName.toLowerCase());
-
         return this.waitForStablePage(productName);
     }
+
 
     /**
      * Set product quantity for adding to cart
@@ -58,7 +51,7 @@ export class ProductPage extends BasePage {
 
     /**
      * Check if confirmation is displayed after adding product to cart
-     * @returns 
+     * @returns {Promise<boolean>}
      */
     async isConfirmAlertDisplayed(): Promise<boolean> {
         try {
@@ -73,7 +66,7 @@ export class ProductPage extends BasePage {
 
     /**
      * Navigate to Shopping Cart page
-     * @returns Promise<CartPage> - Returns CartPage instance
+     * @returns {Promise<CartPage>}
      */
     async navigateToShoppingCart(): Promise<CartPage> {
         await this.shoppingCartLink.click();

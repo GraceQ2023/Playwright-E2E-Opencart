@@ -1,4 +1,10 @@
 
+/**
+ * @fileoverview Data driven test for user registration functionality using CSV data source.
+ * This test reads registration details and expected outcomes from CSV file
+ */
+
+
 import { test, expect } from '@playwright/test';
 import { RegisterPage } from '../pages/RegisterPage';
 import { RegisterSuccessPage } from '../pages/RegisterSuccessPage';
@@ -8,7 +14,7 @@ import { HomePage } from '../pages/HomePage';
 import { RandomDataUtil } from '../utils/randomDataGenerator';
 
 
-// Data driven test for user registration 
+// Data driven test for user registration functionality using CSV data source
 
 // Load test data from CSV
 const csvPath = "testData/registerdata.csv";
@@ -35,7 +41,7 @@ test.describe('User Registration Functionality - Data Driven Test', () => {
             await homePage.goToRegisterPage();
             expect(await registerPage.isPageLoaded()).toBeTruthy();
 
-            // generate random data where indicated
+            // Generate random data where indicated
             const firstName = data.fName === 'RandomFirst' ? RandomDataUtil.generateFirstName() : data.fName;
             const lastName = data.lName === 'RandomLast' ? RandomDataUtil.generateLastName() : data.lName;
             const email = data.email === 'RandomEmail' ? RandomDataUtil.generateEmail() : data.email;
@@ -65,7 +71,6 @@ test.describe('User Registration Functionality - Data Driven Test', () => {
 
             // Assert expected results
             if (data.expectedResult === 'success') {
-                // expect(await registerPage.isRegistrationSuccess()).toBeTruthy();
                 expect(await registerSuccessPage.isPageLoaded()).toBeTruthy();
             } else if (data.expectedResult === 'fieldError') {
                 expect(await registerPage.getFieldErrorMsg()).toContain(data.expectedMsg);
