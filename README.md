@@ -43,3 +43,13 @@ Refer to the project directory for detailed structure.
 - **Jenkins**
 - **GitHub** 
 
+
+## Test Pyramid Context
+
+Since the demo application does not provide any public API endpoints, it is not feasible to implement true API Integration tests (middle layer of the Test Pyramid).
+
+As a result, the test suite primarily consists of:
+- UI / E2E tests: covering UI and critical user workflows (top layer of Test Pyramid)
+- database connectivity test: representing a basic Integration test (middle layer of Test Pyramid)
+
+This structure reflects the limitations of the demo application while still demonstrating a layered testing approach aligned with the Test Pyramid concept.

@@ -16,20 +16,20 @@
  */
 
 import { test, expect } from '@playwright/test';
-import { HomePage } from '../pages/HomePage';
-import { RegisterPage } from '../pages/RegisterPage';
-import { RegisterSuccessPage } from '../pages/RegisterSuccessPage';
-import { LoginPage } from '../pages/LoginPage';
-import { SearchResultPage } from '../pages/SearchResultPage';
-import { ProductPage } from '../pages/ProductPage';
-import { CartPage } from '../pages/CartPage';
-import { MyAccountPage } from '../pages/MyAccountPage';
-import { LogoutPage } from '../pages/LogoutPage';
-import { RandomDataUtil } from '../utils/randomDataGenerator';
-import { TestConfig } from '../test.config';
-import { CheckoutPage } from '../pages/CheckoutPage';
-import { OrderConfirmationPage } from '../pages/OrderConfirmationPage';
-import { DBUtil } from '../utils/dbUtil';
+import { HomePage } from '../../pages/HomePage';
+import { RegisterPage } from '../../pages/RegisterPage';
+import { RegisterSuccessPage } from '../../pages/RegisterSuccessPage';
+import { LoginPage } from '../../pages/LoginPage';
+import { SearchResultPage } from '../../pages/SearchResultPage';
+import { ProductPage } from '../../pages/ProductPage';
+import { CartPage } from '../../pages/CartPage';
+import { MyAccountPage } from '../../pages/MyAccountPage';
+import { LogoutPage } from '../../pages/LogoutPage';
+import { RandomDataUtil } from '../../utils/randomDataGenerator';
+import { TestConfig } from '../../test.config';
+import { CheckoutPage } from '../../pages/CheckoutPage';
+import { OrderConfirmationPage } from '../../pages/OrderConfirmationPage';
+import { DBUtil } from '../../utils/dbUtil';
 
 
 // E2E Workflow Test: Register → Login → Search Product → Add to Cart → Checkout → Logout

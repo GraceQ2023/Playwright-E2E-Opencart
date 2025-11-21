@@ -17,14 +17,14 @@
 
 
 import { test, expect } from '@playwright/test';
-import { HomePage } from '../pages/HomePage';
-import { LoginPage } from '../pages/LoginPage';
-import { MyAccountPage } from '../pages/MyAccountPage';
-import { MyAccInfoPage} from '../pages/MyAccInfoPage';
-import { LogoutPage } from '../pages/LogoutPage';
-import { RandomDataUtil } from '../utils/randomDataGenerator';
-import { TestConfig } from '../test.config';
-import { DBUtil } from '../utils/dbUtil';
+import { HomePage } from '../../pages/HomePage';
+import { LoginPage } from '../../pages/LoginPage';
+import { MyAccountPage } from '../../pages/MyAccountPage';
+import { MyAccInfoPage} from '../../pages/MyAccInfoPage';
+import { LogoutPage } from '../../pages/LogoutPage';
+import { RandomDataUtil } from '../../utils/randomDataGenerator';
+import { TestConfig } from '../../test.config';
+import { DBUtil } from '../../utils/dbUtil';
 
 
 test.describe('E2E Workflow 2: Update Account Info', { tag: ['@e2e', '@workflow2', '@db'] }, () => {

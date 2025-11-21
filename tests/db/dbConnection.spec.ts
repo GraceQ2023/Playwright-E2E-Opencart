@@ -3,7 +3,7 @@
  */
 
 import {test, expect} from '@playwright/test';
-import { DBUtil } from '../utils/dbUtil';
+import { DBUtil } from '../../utils/dbUtil';
 
 
 test('verify database connection and run basic query execution @master @db @sanity', async () => {

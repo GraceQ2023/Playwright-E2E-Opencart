@@ -9,11 +9,11 @@
 
 
 import {test, expect} from '@playwright/test';
-import { TestConfig } from '../test.config';
-import { HomePage } from '../pages/HomePage';
-import { RegisterPage } from '../pages/RegisterPage';
-import { RandomDataUtil } from '../utils/randomDataGenerator';
-import { RegisterSuccessPage } from '../pages/RegisterSuccessPage';
+import { TestConfig } from '../../test.config';
+import { HomePage } from '../../pages/HomePage';
+import { RegisterPage } from '../../pages/RegisterPage';
+import { RandomDataUtil } from '../../utils/randomDataGenerator';
+import { RegisterSuccessPage } from '../../pages/RegisterSuccessPage';
 
 
 test.describe('User Registration Functionality', () => {

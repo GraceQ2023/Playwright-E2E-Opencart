@@ -7,10 +7,10 @@
 
 
 import {test, expect} from '@playwright/test';
-import { TestConfig } from '../test.config';
-import { HomePage } from '../pages/HomePage';
-import { SearchResultPage } from '../pages/SearchResultPage';
-import { RandomDataUtil } from '../utils/randomDataGenerator';
+import { TestConfig } from '../../test.config';
+import { HomePage } from '../../pages/HomePage';
+import { SearchResultPage } from '../../pages/SearchResultPage';
+import { RandomDataUtil } from '../../utils/randomDataGenerator';
 
 
 test.describe('Search Product Functionality', () => {

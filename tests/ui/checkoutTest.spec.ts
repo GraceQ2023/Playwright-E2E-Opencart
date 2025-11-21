@@ -11,13 +11,13 @@
 
 
 import { test, expect } from '@playwright/test';
-import { CheckoutPage } from '../pages/CheckoutPage';
-import { RandomDataUtil } from '../utils/randomDataGenerator';
-import { HomePage } from '../pages/HomePage';
-import { LoginPage } from '../pages/LoginPage';
-import { TestConfig } from '../test.config';
-import { MyAccountPage } from '../pages/MyAccountPage';
-import { OrderConfirmationPage } from '../pages/OrderConfirmationPage';
+import { CheckoutPage } from '../../pages/CheckoutPage';
+import { RandomDataUtil } from '../../utils/randomDataGenerator';
+import { HomePage } from '../../pages/HomePage';
+import { LoginPage } from '../../pages/LoginPage';
+import { TestConfig } from '../../test.config';
+import { MyAccountPage } from '../../pages/MyAccountPage';
+import { OrderConfirmationPage } from '../../pages/OrderConfirmationPage';
 
 
 test.describe('Checkout Functionality', () => {

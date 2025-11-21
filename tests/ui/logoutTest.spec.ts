@@ -6,11 +6,11 @@
 
 
 import {test, expect} from '@playwright/test';
-import { TestConfig } from '../test.config';
-import { HomePage } from '../pages/HomePage';
-import { LoginPage } from '../pages/LoginPage';
-import { LogoutPage } from '../pages/LogoutPage';
-import { MyAccountPage } from '../pages/MyAccountPage';
+import { TestConfig } from '../../test.config';
+import { HomePage } from '../../pages/HomePage';
+import { LoginPage } from '../../pages/LoginPage';
+import { LogoutPage } from '../../pages/LogoutPage';
+import { MyAccountPage } from '../../pages/MyAccountPage';
 
 
 test.describe('User Logout Functionality', () => {

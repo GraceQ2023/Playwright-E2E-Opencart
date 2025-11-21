@@ -7,12 +7,12 @@
 
 
 import {test, expect} from '@playwright/test';
-import { TestConfig } from '../test.config';
-import { HomePage } from '../pages/HomePage';
-import { LoginPage } from '../pages/LoginPage';
-import { MyAccountPage } from '../pages/MyAccountPage';
-import { MyAccInfoPage } from '../pages/MyAccInfoPage';
-import { RandomDataUtil } from '../utils/randomDataGenerator';
+import { TestConfig } from '../../test.config';
+import { HomePage } from '../../pages/HomePage';
+import { LoginPage } from '../../pages/LoginPage';
+import { MyAccountPage } from '../../pages/MyAccountPage';
+import { MyAccInfoPage } from '../../pages/MyAccInfoPage';
+import { RandomDataUtil } from '../../utils/randomDataGenerator';
 
 
 test.describe('Edit Account Functionality', () => {

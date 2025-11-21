@@ -6,12 +6,12 @@
 
 
 import { test, expect } from '@playwright/test';
-import { RegisterPage } from '../pages/RegisterPage';
-import { RegisterSuccessPage } from '../pages/RegisterSuccessPage';
-import { DataProvider } from '../utils/dataProvider';
-import { TestConfig } from '../test.config';
-import { HomePage } from '../pages/HomePage';
-import { RandomDataUtil } from '../utils/randomDataGenerator';
+import { RegisterPage } from '../../pages/RegisterPage';
+import { RegisterSuccessPage } from '../../pages/RegisterSuccessPage';
+import { DataProvider } from '../../utils/dataProvider';
+import { TestConfig } from '../../test.config';
+import { HomePage } from '../../pages/HomePage';
+import { RandomDataUtil } from '../../utils/randomDataGenerator';
 
 
 // Data driven test for user registration functionality using CSV data source

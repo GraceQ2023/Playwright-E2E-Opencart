@@ -8,11 +8,11 @@
 
 
 import {test, expect} from '@playwright/test';
-import { TestConfig } from '../test.config';
-import { HomePage } from '../pages/HomePage';
-import { SearchResultPage } from '../pages/SearchResultPage';
-import { ProductPage } from '../pages/ProductPage';
-import { CartPage } from '../pages/CartPage';
+import { TestConfig } from '../../test.config';
+import { HomePage } from '../../pages/HomePage';
+import { SearchResultPage } from '../../pages/SearchResultPage';
+import { ProductPage } from '../../pages/ProductPage';
+import { CartPage } from '../../pages/CartPage';
 
 
 test.describe('Add to Cart Functionality', () => {
